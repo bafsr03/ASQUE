@@ -1,0 +1,103 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  shortDesc   String?  // Brief description for quote line items
+  longDesc    String?  // Detailed description for appendix
+  price       Float
+  category    String?
+  specs       String?  // JSON string for technical specifications
+  images      String?  // JSON array of image URLs
+  stockStatus String   @default("available")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  links      ProductLink[]
+  quoteItems QuoteItem[]
+
+  @@index([code])
+  @@index([name])
+  @@index([category])
+}
+
+model ProductLink {
+  id        String  @id @default(cuid())
+  productId String
+  linkType  String  // 'product_page', 'datasheet', 'faq', 'video'
+  url       String
+  label     String?
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Client {
+  id         String   @id @default(cuid())
+  name       String
+  taxId      String   @unique // RUC for Peru
+  address    String?
+  contact    String?
+  email      String?
+  phone      String?
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  quotations Quotation[]
+
+  @@index([taxId])
+  @@index([name])
+}
+
+model Quotation {
+  id           String   @id @default(cuid())
+  quoteNumber  String   @unique
+  clientId     String
+  date         DateTime @default(now())
+  validityDays Int      @default(15)
+  agentName    String?
+  status       String   @default("draft") // 'draft', 'sent', 'accepted', 'rejected'
+  notes        String?
+  paymentTerms String?
+  discount     Float    @default(0) // Global discount
+  taxRate      Float    @default(0.18) // IGV rate
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  client Client      @relation(fields: [clientId], references: [id])
+  items  QuoteItem[]
+
+  @@index([quoteNumber])
+  @@index([clientId])
+  @@index([status])
+  @@index([date])
+}
+
+model QuoteItem {
+  id         String  @id @default(cuid())
+  quoteId    String
+  productId  String
+  quantity   Int
+  unitPrice  Float
+  discount   Float   @default(0) // Line-item discount
+  subtotal   Float   // Calculated: (quantity * unitPrice) - discount
+
+  quote   Quotation @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  product Product   @relation(fields: [productId], references: [id])
+
+  @@index([quoteId])
+  @@index([productId])
+}

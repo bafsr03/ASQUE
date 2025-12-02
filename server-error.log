@@ -1,0 +1,111 @@
+Error fetching quote: PrismaClientValidationError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].quotation.findUnique()` invocation in
+/Users/prueba/Desktop/Antigravity/ASQUE/.next/dev/server/chunks/[root-of-the-server]__a357a06e._.js:82:164
+
+  79 ;
+  80 async function GET(request, { params }) {
+  81     try {
+→ 82         const quote = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].quotation.findUnique({
+               where: {
+                 id: undefined,
+             ?   quoteNumber?: String,
+             ?   AND?: QuotationWhereInput | QuotationWhereInput[],
+             ?   OR?: QuotationWhereInput[],
+             ?   NOT?: QuotationWhereInput | QuotationWhereInput[],
+             ?   clientId?: StringFilter | String,
+             ?   date?: DateTimeFilter | DateTime,
+             ?   validityDays?: IntFilter | Int,
+             ?   agentName?: StringNullableFilter | String | Null,
+             ?   status?: StringFilter | String,
+             ?   notes?: StringNullableFilter | String | Null,
+             ?   paymentTerms?: StringNullableFilter | String | Null,
+             ?   discount?: FloatFilter | Float,
+             ?   taxRate?: FloatFilter | Float,
+             ?   createdAt?: DateTimeFilter | DateTime,
+             ?   updatedAt?: DateTimeFilter | DateTime,
+             ?   client?: ClientRelationFilter | ClientWhereInput,
+             ?   items?: QuoteItemListRelationFilter
+               },
+               include: {
+                 client: true,
+                 items: {
+                   include: {
+                     product: {
+                       include: {
+                         links: true
+                       }
+                     }
+                   }
+                 }
+               }
+             })
+
+Argument `where` of type QuotationWhereUniqueInput needs at least one of `id` or `quoteNumber` arguments. Available options are marked with ?.
+PrismaClientValidationError: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].quotation.findUnique()` invocation in
+/Users/prueba/Desktop/Antigravity/ASQUE/.next/dev/server/chunks/[root-of-the-server]__a357a06e._.js:82:164
+
+  79 ;
+  80 async function GET(request, { params }) {
+  81     try {
+→ 82         const quote = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].quotation.findUnique({
+               where: {
+                 id: undefined,
+             ?   quoteNumber?: String,
+             ?   AND?: QuotationWhereInput | QuotationWhereInput[],
+             ?   OR?: QuotationWhereInput[],
+             ?   NOT?: QuotationWhereInput | QuotationWhereInput[],
+             ?   clientId?: StringFilter | String,
+             ?   date?: DateTimeFilter | DateTime,
+             ?   validityDays?: IntFilter | Int,
+             ?   agentName?: StringNullableFilter | String | Null,
+             ?   status?: StringFilter | String,
+             ?   notes?: StringNullableFilter | String | Null,
+             ?   paymentTerms?: StringNullableFilter | String | Null,
+             ?   discount?: FloatFilter | Float,
+             ?   taxRate?: FloatFilter | Float,
+             ?   createdAt?: DateTimeFilter | DateTime,
+             ?   updatedAt?: DateTimeFilter | DateTime,
+             ?   client?: ClientRelationFilter | ClientWhereInput,
+             ?   items?: QuoteItemListRelationFilter
+               },
+               include: {
+                 client: true,
+                 items: {
+                   include: {
+                     product: {
+                       include: {
+                         links: true
+                       }
+                     }
+                   }
+                 }
+               }
+             })
+
+Argument `where` of type QuotationWhereUniqueInput needs at least one of `id` or `quoteNumber` arguments. Available options are marked with ?.
+    at An (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/@prisma/client/runtime/library.js:114:7526)
+    at _n.handleRequestError (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/@prisma/client/runtime/library.js:121:7392)
+    at _n.handleAndLogRequestError (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/@prisma/client/runtime/library.js:121:7057)
+    at _n.request (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/@prisma/client/runtime/library.js:121:6741)
+    at async l (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/@prisma/client/runtime/library.js:130:9355)
+    at async GET (/Users/prueba/Desktop/Antigravity/ASQUE/.next/dev/server/chunks/[root-of-the-server]__a357a06e._.js:82:23)
+    at async AppRouteRouteModule.do (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:37789)
+    at async AppRouteRouteModule.handle (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:5:45045)
+    at async responseGenerator (/Users/prueba/Desktop/Antigravity/ASQUE/.next/dev/server/chunks/node_modules_next_abe4e381._.js:14333:38)
+    at async AppRouteRouteModule.handleResponse (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js:1:187851)
+    at async handleResponse (/Users/prueba/Desktop/Antigravity/ASQUE/.next/dev/server/chunks/node_modules_next_abe4e381._.js:14395:32)
+    at async handler (/Users/prueba/Desktop/Antigravity/ASQUE/.next/dev/server/chunks/node_modules_next_abe4e381._.js:14448:13)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/base-server.js:1413:9)
+    at async DevServer.renderPageComponent (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/base-server.js:1465:24)
+    at async DevServer.renderToResponseImpl (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/base-server.js:1515:32)
+    at async DevServer.pipeImpl (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/base-server.js:1021:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/next-server.js:394:17)
+    at async DevServer.handleRequestImpl (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/base-server.js:912:17)
+    at async /Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/dev/next-dev-server.js:382:20
+    at async Span.traceAsyncFn (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/dev/next-dev-server.js:378:24)
+    at async invokeRender (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/lib/router-server.js:436:24)
+    at async requestHandlerImpl (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/lib/router-server.js:484:13)
+    at async Server.requestListener (/Users/prueba/Desktop/Antigravity/ASQUE/node_modules/next/dist/server/lib/start-server.js:226:13)
