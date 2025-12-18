@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 import DashboardLayout from "@/components/DashboardLayout";
 import Link from "next/link";
 import { Plus, FileText } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
+import { UpgradeButton } from "@/components/UpgradeButton";
 
 interface Quote {
   id: string;
@@ -20,15 +22,23 @@ interface Quote {
 }
 
 export default function QuotesPage() {
+  const { userId, isLoaded } = useAuth();
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchQuotes();
-  }, []);
+    if (isLoaded) {
+        if (userId) {
+            fetchQuotes();
+        } else {
+            setLoading(false);
+        }
+    }
+  }, [isLoaded, userId]);
 
   const fetchQuotes = async () => {
     try {
+      setLoading(true);
       const response = await fetch("/api/quotes");
       if (!response.ok) {
         throw new Error("Failed to fetch quotes");
@@ -68,13 +78,16 @@ export default function QuotesPage() {
               Manage your quotes and generate PDFs
             </p>
           </div>
-          <Link
-            href="/quotes/new"
-            className="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
-          >
-            <Plus className="w-5 h-5" />
-            <span>New Quote</span>
-          </Link>
+          <div className="flex items-center space-x-4">
+            <UpgradeButton />
+            <Link
+              href="/quotes/new"
+              className="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
+            >
+              <Plus className="w-5 h-5" />
+              <span>New Quote</span>
+            </Link>
+          </div>
         </div>
 
         {/* Quotes List */}

@@ -159,7 +159,8 @@ export default function NewQuotePage() {
         const quote = await response.json();
         router.push(`/quotes/${quote.id}`);
       } else {
-        alert("Failed to create quote");
+        const data = await response.json();
+        alert(data.error || "Failed to create quote");
       }
     } catch (error) {
       console.error("Error creating quote:", error);

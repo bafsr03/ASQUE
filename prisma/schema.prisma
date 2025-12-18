@@ -10,32 +10,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model User {
+  id                 String    @id
+  email              String    @unique
+  stripeCustomerId   String?
+  subscriptionStatus String    @default("FREE") // FREE, PRO
+  subscriptionEnds   DateTime?
+  quoteCount         Int       @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  products   Product[]
+  clients    Client[]
+  quotations Quotation[]
+  settings   Settings?
+}
+
 model Product {
   id          String   @id @default(cuid())
-  code        String   @unique
+  userId      String
+  code        String
   name        String
-  shortDesc   String?  // Brief description for quote line items
-  longDesc    String?  // Detailed description for appendix
+  shortDesc   String? // Brief description for quote line items
+  longDesc    String? // Detailed description for appendix
   price       Float
   category    String?
-  specs       String?  // JSON string for technical specifications
-  images      String?  // JSON array of image URLs
+  specs       String? // JSON string for technical specifications
+  images      String? // JSON array of image URLs
   stockStatus String   @default("available")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  user       User          @relation(fields: [userId], references: [id])
   links      ProductLink[]
   quoteItems QuoteItem[]
 
+  @@index([userId])
   @@index([code])
   @@index([name])
   @@index([category])
+  @@unique([userId, code]) // Code unique per user
 }
 
 model ProductLink {
   id        String  @id @default(cuid())
   productId String
-  linkType  String  // 'product_page', 'datasheet', 'faq', 'video'
+  linkType  String // 'product_page', 'datasheet', 'faq', 'video'
   url       String
   label     String?
 
@@ -45,26 +66,31 @@ model ProductLink {
 }
 
 model Client {
-  id         String   @id @default(cuid())
-  name       String
-  taxId      String   @unique // RUC for Peru
-  address    String?
-  contact    String?
-  email      String?
-  phone      String?
-  notes      String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  taxId     String // RUC for Peru
+  address   String?
+  contact   String?
+  email     String?
+  phone     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  user       User        @relation(fields: [userId], references: [id])
   quotations Quotation[]
 
+  @@index([userId])
   @@index([taxId])
   @@index([name])
+  @@unique([userId, taxId]) // Tax ID unique per user
 }
 
 model Quotation {
   id           String   @id @default(cuid())
-  quoteNumber  String   @unique
+  userId       String
+  quoteNumber  String
   clientId     String
   date         DateTime @default(now())
   validityDays Int      @default(15)
@@ -77,27 +103,48 @@ model Quotation {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  user   User        @relation(fields: [userId], references: [id])
   client Client      @relation(fields: [clientId], references: [id])
   items  QuoteItem[]
 
+  @@index([userId])
   @@index([quoteNumber])
   @@index([clientId])
   @@index([status])
   @@index([date])
+  @@unique([userId, quoteNumber]) // Quote number unique per user
 }
 
 model QuoteItem {
-  id         String  @id @default(cuid())
-  quoteId    String
-  productId  String
-  quantity   Int
-  unitPrice  Float
-  discount   Float   @default(0) // Line-item discount
-  subtotal   Float   // Calculated: (quantity * unitPrice) - discount
+  id        String @id @default(cuid())
+  quoteId   String
+  productId String
+  quantity  Int
+  unitPrice Float
+  discount  Float  @default(0) // Line-item discount
+  subtotal  Float // Calculated: (quantity * unitPrice) - discount
 
   quote   Quotation @relation(fields: [quoteId], references: [id], onDelete: Cascade)
   product Product   @relation(fields: [productId], references: [id])
 
   @@index([quoteId])
   @@index([productId])
+}
+
+model Settings {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  companyName    String   @default("My Company")
+  companyAddress String?
+  companyEmail   String?
+  companyPhone   String?
+  companyTaxId   String?
+  logoUrl        String?
+  font           String   @default("Helvetica")
+  primaryColor   String   @default("#2563eb")
+  secondaryColor String   @default("#1e40af")
+  template       String   @default("modern")
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }

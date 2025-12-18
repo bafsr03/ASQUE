@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { auth } from "@clerk/nextjs/server";
 
 // GET /api/clients - List all clients
 export async function GET(request: NextRequest) {
     try {
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const { searchParams } = new URL(request.url);
         const search = searchParams.get("search");
 
-        const where: any = {};
+        const where: any = { userId };
 
         if (search) {
             where.OR = [
@@ -37,10 +43,15 @@ export async function GET(request: NextRequest) {
 // POST /api/clients - Create a new client
 export async function POST(request: NextRequest) {
     try {
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const body = await request.json();
 
         const client = await prisma.client.create({
-            data: body,
+            data: { ...body, userId },
         });
 
         return NextResponse.json(client, { status: 201 });

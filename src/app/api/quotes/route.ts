@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { generateQuoteNumber } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
+import { checkQuoteLimit, incrementQuoteCount } from "@/lib/limits";
 
 // GET /api/quotes - List all quotes
 export async function GET() {
     try {
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const quotes = await prisma.quotation.findMany({
+            where: {
+                userId,
+            },
             include: {
                 client: true,
                 items: {
@@ -32,6 +42,19 @@ export async function GET() {
 // POST /api/quotes - Create a new quote
 export async function POST(request: NextRequest) {
     try {
+        const { userId } = await auth();
+        if (!userId) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const canCreate = await checkQuoteLimit();
+        if (!canCreate) {
+            return NextResponse.json(
+                { error: "Quote limit reached. Please upgrade to Pro." },
+                { status: 403 }
+            );
+        }
+
         const body = await request.json();
         const { clientId, items, agentName, notes, paymentTerms, discount, validityDays } = body;
 
@@ -49,6 +72,7 @@ export async function POST(request: NextRequest) {
 
         const quote = await prisma.quotation.create({
             data: {
+                userId, // Associate with user
                 quoteNumber,
                 clientId,
                 agentName,
@@ -73,6 +97,9 @@ export async function POST(request: NextRequest) {
                 },
             },
         });
+
+        // Increment usage count if successful
+        await incrementQuoteCount();
 
         return NextResponse.json(quote, { status: 201 });
     } catch (error) {

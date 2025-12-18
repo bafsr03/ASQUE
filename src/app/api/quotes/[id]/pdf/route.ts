@@ -33,8 +33,26 @@ export async function GET(
             );
         }
 
+        // Fetch settings (or create default) for the quote's owner
+        let settings = await prisma.settings.findUnique({
+            where: { userId: quote.userId }
+        });
+
+        if (!settings) {
+            settings = await prisma.settings.create({
+                data: {
+                    userId: quote.userId,
+                    companyName: "My Company",
+                    primaryColor: "#2563eb",
+                    secondaryColor: "#1e40af",
+                    font: "Helvetica",
+                    template: "modern",
+                },
+            });
+        }
+
         // Generate PDF stream
-        const stream = await renderToStream(createElement(QuotePDF, { quote }) as any);
+        const stream = await renderToStream(createElement(QuotePDF, { quote, settings }) as any);
 
         // Return PDF as response
         return new NextResponse(stream as unknown as ReadableStream, {

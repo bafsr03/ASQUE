@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+// Trigger restart
 const nextConfig = {
   turbopack: {},
 };

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Package, Users, FileText, LayoutDashboard } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
@@ -9,10 +10,24 @@ export default function Home() {
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
             Welcome to ASQUE
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
             Universal Quotation Management System - Create professional quotes
             with automatic product descriptions in minutes
           </p>
+          <div className="flex justify-center space-x-4">
+            <SignedOut>
+                <SignInButton mode="modal">
+                    <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold shadow-md">
+                        Get Started
+                    </button>
+                </SignInButton>
+            </SignedOut>
+            <SignedIn>
+                <Link href="/dashboard" className="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition-colors text-lg font-semibold shadow-md">
+                    Go to Dashboard
+                </Link>
+            </SignedIn>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
