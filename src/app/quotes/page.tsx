@@ -73,9 +73,9 @@ export default function QuotesPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Quotations</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Cotizaciones</h1>
             <p className="text-gray-600 mt-1">
-              Manage your quotes and generate PDFs
+              Gestiona tus cotizaciones y genera PDFs
             </p>
           </div>
           <div className="flex items-center space-x-4">
@@ -85,7 +85,7 @@ export default function QuotesPage() {
               className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
             >
               <Plus className="w-5 h-5" />
-              <span>New Quote</span>
+              <span>Nueva Cotización</span>
             </Link>
           </div>
         </div>
@@ -99,17 +99,17 @@ export default function QuotesPage() {
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
             <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No quotes yet
+              Aún no hay cotizaciones
             </h3>
             <p className="text-gray-600 mb-6">
-              Create your first professional quotation
+              Crea tu primera cotización profesional
             </p>
             <Link
               href="/quotes/new"
               className="inline-flex items-center space-x-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
             >
               <Plus className="w-5 h-5" />
-              <span>New Quote</span>
+              <span>Nueva Cotización</span>
             </Link>
           </div>
         ) : (
@@ -118,22 +118,22 @@ export default function QuotesPage() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Quote #
+                    Cotización #
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Client
+                    Cliente
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
+                    Fecha
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Total
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    Estado
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    Acciones
                   </th>
                 </tr>
               </thead>
@@ -168,7 +168,7 @@ export default function QuotesPage() {
                           href={`/quotes/${quote.id}`}
                           className="text-indigo-600 hover:text-indigo-900 font-medium"
                         >
-                          View
+                          Ver
                         </Link>
                       </td>
                     </tr>

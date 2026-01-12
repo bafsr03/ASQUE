@@ -36,7 +36,7 @@ export default async function DashboardPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Panel de Control</h1>
         
         {!isPro && (
              <div className="bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow p-8 border border-gray-100">
@@ -44,15 +44,15 @@ export default async function DashboardPage() {
                     <div>
                         <h2 className="text-xl font-bold text-gray-900 flex items-center mb-2">
                             <Zap className="w-5 h-5 mr-3 text-orange-500" />
-                            Free Plan Usage
+                            Uso del Plan Gratuito
                         </h2>
                         <p className="text-gray-500">
-                            You have used <span className="font-semibold text-gray-900">{usage}</span> of <span className="font-semibold text-gray-900">{limit}</span> free quotes.
+                            Has utilizado <span className="font-semibold text-gray-900">{usage}</span> de <span className="font-semibold text-gray-900">{limit}</span> cotizaciones gratuitas.
                         </p>
                     </div>
                     {usage >= limit && (
                         <div className="text-red-600 text-xs font-bold bg-red-50 px-3 py-1.5 rounded-full border border-red-100">
-                            Limit Reached
+                            Límite Alcanzado
                         </div>
                     )}
                 </div>
@@ -78,8 +78,8 @@ export default async function DashboardPage() {
                         <Zap className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold mb-1">Pro Plan Active</h2>
-                        <p className="text-indigo-100 font-medium opacity-90">You have unlimited access to all features.</p>
+                        <h2 className="text-2xl font-bold mb-1">Plan Pro Activo</h2>
+                        <p className="text-indigo-100 font-medium opacity-90">Tienes acceso ilimitado a todas las funciones.</p>
                     </div>
                 </div>
             </div>
@@ -87,17 +87,17 @@ export default async function DashboardPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatCard
-            title="Total Quotes"
+            title="Total Cotizaciones"
             value={stats.quotes}
             icon={<FileText className="w-6 h-6 text-indigo-600" />}
           />
           <StatCard
-            title="Clients"
+            title="Clientes"
             value={stats.clients}
             icon={<Users className="w-6 h-6 text-indigo-600" />}
           />
           <StatCard
-            title="Products"
+            title="Productos"
             value={stats.products}
             icon={<Package className="w-6 h-6 text-indigo-600" />}
           />

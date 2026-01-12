@@ -45,11 +45,11 @@ export default function NewProductPage() {
       if (response.ok) {
         router.push("/products");
       } else {
-        alert("Failed to create product");
+        alert("Error al crear producto");
       }
     } catch (error) {
       console.error("Error creating product:", error);
-      alert("Failed to create product");
+      alert("Error al crear producto");
     } finally {
       setLoading(false);
     }
@@ -76,9 +76,9 @@ export default function NewProductPage() {
     <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Add New Product</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Agregar Nuevo Producto</h1>
           <p className="text-gray-600 mt-1">
-            Create a new product in your catalog
+            Crear un nuevo producto en tu catálogo
           </p>
         </div>
 
@@ -86,12 +86,12 @@ export default function NewProductPage() {
           {/* Basic Information */}
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Basic Information
+              Información Básica
             </h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Product Code *
+                  Código de Producto *
                 </label>
                 <input
                   type="text"
@@ -107,7 +107,7 @@ export default function NewProductPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Product Name *
+                  Nombre del Producto *
                 </label>
                 <input
                   type="text"
@@ -117,13 +117,13 @@ export default function NewProductPage() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Product Name"
+                  placeholder="Nombre del Producto"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Price (S/) *
+                  Precio (S/) *
                 </label>
                 <input
                   type="number"
@@ -140,7 +140,7 @@ export default function NewProductPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Category
+                  Categoría
                 </label>
                 <input
                   type="text"
@@ -149,13 +149,13 @@ export default function NewProductPage() {
                     setFormData({ ...formData, category: e.target.value })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Electronics, Solar, etc."
+                  placeholder="Electrónica, Solar, etc."
                 />
               </div>
 
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Stock Status
+                  Estado del Stock
                 </label>
                 <select
                   value={formData.stockStatus}
@@ -164,9 +164,9 @@ export default function NewProductPage() {
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="available">Available</option>
-                  <option value="out_of_stock">Out of Stock</option>
-                  <option value="discontinued">Discontinued</option>
+                  <option value="available">Disponible</option>
+                  <option value="out_of_stock">Agotado</option>
+                  <option value="discontinued">Descontinuado</option>
                 </select>
               </div>
             </div>
@@ -175,15 +175,15 @@ export default function NewProductPage() {
           {/* Descriptions */}
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Descriptions
+              Descripciones
             </h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Short Description
+                  Descripción Corta
                 </label>
                 <p className="text-xs text-gray-500 mb-2">
-                  Brief description for quote line items
+                  Descripción breve para los ítems de la cotización
                 </p>
                 <textarea
                   value={formData.shortDesc}
@@ -192,16 +192,16 @@ export default function NewProductPage() {
                   }
                   rows={2}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Brief product description..."
+                  placeholder="Breve descripción del producto..."
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Long Description
+                  Descripción Larga
                 </label>
                 <p className="text-xs text-gray-500 mb-2">
-                  Detailed description for PDF appendix
+                  Descripción detallada para el anexo en PDF
                 </p>
                 <textarea
                   value={formData.longDesc}
@@ -210,16 +210,16 @@ export default function NewProductPage() {
                   }
                   rows={5}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Detailed product description, features, specifications..."
+                  placeholder="Descripción detallada, características, especificaciones..."
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Technical Specifications
+                  Especificaciones Técnicas
                 </label>
                 <p className="text-xs text-gray-500 mb-2">
-                  One specification per line (e.g., "Power: 100W")
+                  Una especificación por línea (ej., "Potencia: 100W")
                 </p>
                 <textarea
                   value={formData.specs}
@@ -228,7 +228,7 @@ export default function NewProductPage() {
                   }
                   rows={4}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Power: 100W&#10;Voltage: 220V&#10;Dimensions: 30x20x15cm"
+                  placeholder="Potencia: 100W&#10;Voltaje: 220V&#10;Dimensiones: 30x20x15cm"
                 />
               </div>
             </div>
@@ -239,10 +239,10 @@ export default function NewProductPage() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h2 className="text-xl font-semibold text-gray-900">
-                  Resource Links
+                  Enlaces de Recursos
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Add links to datasheets, videos, FAQs, etc.
+                  Agrega enlaces a fichas técnicas, videos, preguntas frecuentes, etc.
                 </p>
               </div>
               <button
@@ -251,14 +251,14 @@ export default function NewProductPage() {
                 className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-sm font-medium"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Link</span>
+                <span>Agregar Enlace</span>
               </button>
             </div>
 
             {links.length === 0 ? (
               <div className="text-center py-8 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
                 <p className="text-gray-600">
-                  No links added yet
+                  Aún no se han agregado enlaces
                 </p>
               </div>
             ) : (
@@ -276,8 +276,8 @@ export default function NewProductPage() {
                         }
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       >
-                        <option value="product_page">Product Page</option>
-                        <option value="datasheet">Datasheet</option>
+                        <option value="product_page">Página del Producto</option>
+                        <option value="datasheet">Ficha Técnica</option>
                         <option value="faq">FAQ</option>
                         <option value="video">Video</option>
                       </select>
@@ -287,7 +287,7 @@ export default function NewProductPage() {
                         onChange={(e) =>
                           updateLink(index, "url", e.target.value)
                         }
-                        placeholder="https://example.com"
+                        placeholder="https://ejemplo.com"
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       />
                       <input
@@ -296,7 +296,7 @@ export default function NewProductPage() {
                         onChange={(e) =>
                           updateLink(index, "label", e.target.value)
                         }
-                        placeholder="Link label"
+                        placeholder="Etiqueta del enlace"
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                       />
                     </div>
@@ -320,14 +320,14 @@ export default function NewProductPage() {
               onClick={() => router.back()}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Creating..." : "Create Product"}
+              {loading ? "Creando..." : "Crear Producto"}
             </button>
           </div>
         </form>

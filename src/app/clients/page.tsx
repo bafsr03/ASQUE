@@ -46,9 +46,9 @@ export default function ClientsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Clients</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Clientes</h1>
             <p className="text-gray-600 mt-1">
-              Manage your client database
+              Gestiona tu base de datos de clientes
             </p>
           </div>
           <Link
@@ -56,7 +56,7 @@ export default function ClientsPage() {
             className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5" />
-            <span>Add Client</span>
+            <span>Agregar Cliente</span>
           </Link>
         </div>
 
@@ -66,7 +66,7 @@ export default function ClientsPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search clients by name, RUC, or email..."
+              placeholder="Buscar clientes por nombre, RUC o email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -83,12 +83,12 @@ export default function ClientsPage() {
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
             <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No clients found
+              No se encontraron clientes
             </h3>
             <p className="text-gray-600 mb-6">
               {search
-                ? "Try adjusting your search terms"
-                : "Get started by adding your first client"}
+                ? "Intenta ajustar tus términos de búsqueda"
+                : "Empieza agregando tu primer cliente"}
             </p>
             {!search && (
               <Link
@@ -96,7 +96,7 @@ export default function ClientsPage() {
                 className="inline-flex items-center space-x-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
               >
                 <Plus className="w-5 h-5" />
-                <span>Add Client</span>
+                <span>Agregar Cliente</span>
               </Link>
             )}
           </div>
@@ -123,7 +123,7 @@ export default function ClientsPage() {
                   )}
                   {client.phone && (
                     <div className="flex items-center text-gray-600">
-                      <span className="font-medium mr-2">Phone:</span>
+                      <span className="font-medium mr-2">Teléfono:</span>
                       {client.phone}
                     </div>
                   )}
@@ -133,7 +133,7 @@ export default function ClientsPage() {
                     href={`/quotes/new?client=${client.id}`}
                     className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
                   >
-                    Create Quote
+                    Crear Cotización
                   </Link>
                 </div>
               </div>

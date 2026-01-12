@@ -43,14 +43,14 @@ export default function ProductsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this product?")) return;
+    if (!confirm("¿Estás seguro de que deseas eliminar este producto?")) return;
 
     try {
       await fetch(`/api/products/${id}`, { method: "DELETE" });
       fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
-      alert("Failed to delete product");
+      alert("Error al eliminar producto");
     }
   };
 
@@ -60,9 +60,9 @@ export default function ProductsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Products</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Productos</h1>
             <p className="text-gray-600 mt-1">
-              Manage your product catalog
+              Gestiona tu catálogo de productos
             </p>
           </div>
           <Link
@@ -70,7 +70,7 @@ export default function ProductsPage() {
             className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5" />
-            <span>Add Product</span>
+            <span>Agregar Producto</span>
           </Link>
         </div>
 
@@ -80,7 +80,7 @@ export default function ProductsPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search products by code or name..."
+              placeholder="Buscar productos por código o nombre..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -97,12 +97,12 @@ export default function ProductsPage() {
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
             <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No products found
+              No se encontraron productos
             </h3>
             <p className="text-gray-600 mb-6">
               {search
-                ? "Try adjusting your search terms"
-                : "Get started by adding your first product"}
+                ? "Intenta ajustar tus términos de búsqueda"
+                : "Empieza agregando tu primer producto"}
             </p>
             {!search && (
               <Link
@@ -110,7 +110,7 @@ export default function ProductsPage() {
                 className="inline-flex items-center space-x-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
               >
                 <Plus className="w-5 h-5" />
-                <span>Add Product</span>
+                <span>Agregar Producto</span>
               </Link>
             )}
           </div>
@@ -120,22 +120,22 @@ export default function ProductsPage() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Code
+                    Código
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Name
+                    Nombre
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Category
+                    Categoría
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Price
+                    Precio
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    Estado
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    Acciones
                   </th>
                 </tr>
               </thead>
@@ -203,16 +203,16 @@ export default function ProductsPage() {
             </div>
             <div className="flex-1">
               <h3 className="text-sm font-medium text-indigo-900">
-                Bulk Import Products
+                Importación Masiva de Productos
               </h3>
               <p className="text-sm text-indigo-700/80 mt-1">
-                Import multiple products at once using a CSV file
+                Importa múltiples productos a la vez usando un archivo CSV
               </p>
               <Link
                 href="/products/import"
                 className="inline-block mt-2 text-sm font-medium text-indigo-600 hover:text-indigo-800"
               >
-                Go to Import →
+                Ir a Importar →
               </Link>
             </div>
           </div>

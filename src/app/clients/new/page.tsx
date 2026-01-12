@@ -26,7 +26,7 @@ export default function NewClientPage() {
 
     // Validate RUC
     if (!validateRUC(formData.taxId)) {
-      setError("Invalid RUC. Must be 11 digits.");
+      setError("RUC inválido. Debe tener 11 dígitos.");
       return;
     }
 
@@ -42,11 +42,11 @@ export default function NewClientPage() {
       if (response.ok) {
         router.push("/clients");
       } else {
-        setError("Failed to create client");
+        setError("Error al crear cliente");
       }
     } catch (error) {
       console.error("Error creating client:", error);
-      setError("Failed to create client");
+      setError("Error al crear cliente");
     } finally {
       setLoading(false);
     }
@@ -56,9 +56,9 @@ export default function NewClientPage() {
     <DashboardLayout>
       <div className="max-w-2xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Add New Client</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Agregar Nuevo Cliente</h1>
           <p className="text-gray-600 mt-1">
-            Create a new client record
+            Crear un nuevo registro de cliente
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function NewClientPage() {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Company/Client Name *
+                Nombre de Empresa/Cliente *
               </label>
               <input
                 type="text"
@@ -82,13 +82,13 @@ export default function NewClientPage() {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="Acme Corporation"
+                placeholder="Corporación Acme"
               />
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                RUC (Tax ID) *
+                RUC *
               </label>
               <input
                 type="text"
@@ -102,13 +102,13 @@ export default function NewClientPage() {
                 placeholder="12345678901"
               />
               <p className="text-xs text-gray-500 mt-1">
-                11-digit Peruvian tax identification number
+                Número de identificación tributaria de 11 dígitos
               </p>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Address
+                Dirección
               </label>
               <textarea
                 value={formData.address}
@@ -117,13 +117,13 @@ export default function NewClientPage() {
                 }
                 rows={2}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="Street address, city, postal code"
+                placeholder="Dirección, ciudad, código postal"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Contact Person
+                Persona de Contacto
               </label>
               <input
                 type="text"
@@ -132,13 +132,13 @@ export default function NewClientPage() {
                   setFormData({ ...formData, contact: e.target.value })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="John Doe"
+                placeholder="Juan Pérez"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Phone
+                Teléfono
               </label>
               <input
                 type="tel"
@@ -153,7 +153,7 @@ export default function NewClientPage() {
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                Correo Electrónico
               </label>
               <input
                 type="email"
@@ -162,13 +162,13 @@ export default function NewClientPage() {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="contact@company.com"
+                placeholder="contacto@empresa.com"
               />
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Notes
+                Notas
               </label>
               <textarea
                 value={formData.notes}
@@ -177,7 +177,7 @@ export default function NewClientPage() {
                 }
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                placeholder="Additional notes about this client..."
+                placeholder="Notas adicionales sobre este cliente..."
               />
             </div>
           </div>
@@ -189,14 +189,14 @@ export default function NewClientPage() {
               onClick={() => router.back()}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
               className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Creating..." : "Create Client"}
+              {loading ? "Creando..." : "Crear Cliente"}
             </button>
           </div>
         </form>

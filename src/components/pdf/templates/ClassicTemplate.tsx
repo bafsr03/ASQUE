@@ -1,3 +1,5 @@
+"use client";
+
 import { Document, Page, Text, View, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
@@ -219,7 +221,7 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
             )}
           </View>
           <View style={styles.companyInfo}>
-            <Text style={styles.companyName}>{settings?.companyName || "Your Company Name"}</Text>
+            <Text style={styles.companyName}>{settings?.companyName || "Tu Nombre de Empresa"}</Text>
             {settings?.companyAddress && <Text>{settings.companyAddress}</Text>}
             {settings?.companyEmail && <Text>{settings.companyEmail}</Text>}
             {settings?.companyPhone && <Text>{settings.companyPhone}</Text>}
@@ -227,34 +229,34 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
           </View>
         </View>
 
-        <Text style={styles.title}>QUOTATION</Text>
+        <Text style={styles.title}>COTIZACIÓN</Text>
 
         {/* Info Grid */}
         <View style={styles.grid}>
           <View style={styles.col6}>
-            <Text style={styles.label}>Bill To:</Text>
+            <Text style={styles.label}>Facturar A:</Text>
             <Text style={styles.value}>{quote.client.name}</Text>
             <Text style={styles.value}>{quote.client.taxId}</Text>
             {quote.client.address && <Text>{quote.client.address}</Text>}
-            {quote.client.contact && <Text>Attn: {quote.client.contact}</Text>}
+            {quote.client.contact && <Text>Atn: {quote.client.contact}</Text>}
           </View>
           <View style={styles.col6}>
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.label}>Quote Number:</Text>
+              <Text style={styles.label}>Número de Cotización:</Text>
               <Text style={styles.value}>{quote.quoteNumber}</Text>
             </View>
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.label}>Date:</Text>
+              <Text style={styles.label}>Fecha:</Text>
               <Text style={styles.value}>{formatDate(quote.date)}</Text>
             </View>
             <View style={{ marginBottom: 10 }}>
-              <Text style={styles.label}>Valid Until:</Text>
+              <Text style={styles.label}>Válido Hasta:</Text>
               <Text style={styles.value}>
                 {formatDate(new Date(new Date(quote.date).setDate(new Date(quote.date).getDate() + quote.validityDays)))}
               </Text>
             </View>
             <View>
-              <Text style={styles.label}>Agent:</Text>
+              <Text style={styles.label}>Agente:</Text>
               <Text style={styles.value}>{quote.agentName || "-"}</Text>
             </View>
           </View>
@@ -263,10 +265,10 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
         {/* Items Table */}
         <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={styles.colDesc}>DESCRIPTION</Text>
-            <Text style={styles.colQty}>QTY</Text>
-            <Text style={styles.colPrice}>UNIT PRICE</Text>
-            <Text style={styles.colTotal}>AMOUNT</Text>
+            <Text style={styles.colDesc}>DESCRIPCIÓN</Text>
+            <Text style={styles.colQty}>CANT</Text>
+            <Text style={styles.colPrice}>PRECIO UNIT.</Text>
+            <Text style={styles.colTotal}>MONTO</Text>
           </View>
           {quote.items.map((item: any, index: number) => (
             <View key={index} style={styles.tableRow}>
@@ -292,7 +294,7 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
           </View>
           {quote.discount > 0 && (
             <View style={styles.totalRow}>
-              <Text style={styles.totalLabel}>Discount:</Text>
+              <Text style={styles.totalLabel}>Descuento:</Text>
               <Text style={{ ...styles.totalValue, color: "red" }}>-{formatCurrency(quote.discount)}</Text>
             </View>
           )}
@@ -309,16 +311,16 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
         {/* Notes & Terms */}
         {(quote.notes || quote.paymentTerms) && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Terms & Conditions</Text>
+            <Text style={styles.sectionTitle}>Términos y Condiciones</Text>
             {quote.paymentTerms && (
               <View style={{ marginBottom: 10 }}>
-                <Text style={{ ...styles.label, marginBottom: 4 }}>Payment Terms:</Text>
+                <Text style={{ ...styles.label, marginBottom: 4 }}>Términos de Pago:</Text>
                 <Text style={styles.text}>{quote.paymentTerms}</Text>
               </View>
             )}
             {quote.notes && (
               <View>
-                <Text style={{ ...styles.label, marginBottom: 4 }}>Notes:</Text>
+                <Text style={{ ...styles.label, marginBottom: 4 }}>Notas:</Text>
                 <Text style={styles.text}>{quote.notes}</Text>
               </View>
             )}
@@ -326,14 +328,14 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
         )}
 
         <Text style={styles.footer}>
-          Thank you for your business. We appreciate your trust in us.
+          Gracias por su preferencia. Apreciamos su confianza en nosotros.
         </Text>
       </Page>
 
       {/* Product Details Appendix */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={{ ...styles.title, marginBottom: 0, borderBottomWidth: 0 }}>Product Specifications</Text>
+          <Text style={{ ...styles.title, marginBottom: 0, borderBottomWidth: 0 }}>Especificaciones del Producto</Text>
         </View>
 
         {quote.items.map((item: any, index: number) => (
@@ -346,7 +348,7 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
 
             {item.product.specs && (
               <View style={{ marginTop: 10 }}>
-                <Text style={styles.label}>Technical Specifications:</Text>
+                <Text style={styles.label}>Especificaciones Técnicas:</Text>
                 <Text style={{ ...styles.text, fontFamily: "Courier", fontSize: 10 }}>{item.product.specs}</Text>
               </View>
             )}
@@ -354,7 +356,7 @@ export default function ClassicTemplate({ quote, settings }: TemplateProps) {
         ))}
 
         <Text style={styles.footer}>
-          Page 2 - Product Details
+          Página 2 - Detalles del Producto
         </Text>
       </Page>
     </Document>

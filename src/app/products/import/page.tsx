@@ -30,7 +30,7 @@ export default function ProductImportPage() {
         setStatus(null);
       },
       error: (error) => {
-        setStatus({ type: "error", message: `Error parsing file: ${error.message}` });
+        setStatus({ type: "error", message: `Error al analizar el archivo: ${error.message}` });
       },
     });
   };
@@ -76,14 +76,14 @@ export default function ProductImportPage() {
 
           setStatus({
             type: "success",
-            message: `Import completed: ${successCount} products added, ${errorCount} failed.`,
+            message: `Importación completada: ${successCount} productos agregados, ${errorCount} fallidos.`,
           });
           
           if (successCount > 0) {
             setTimeout(() => router.push("/products"), 2000);
           }
         } catch (error) {
-          setStatus({ type: "error", message: "Failed to import products" });
+          setStatus({ type: "error", message: "Error al importar productos" });
         } finally {
           setLoading(false);
         }
@@ -95,9 +95,9 @@ export default function ProductImportPage() {
     <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Import Products</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Importar Productos</h1>
           <p className="text-gray-600 mt-1">
-            Bulk upload products using CSV
+            Carga masiva de productos usando CSV
           </p>
         </div>
 
@@ -105,10 +105,10 @@ export default function ProductImportPage() {
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
             <FileSpreadsheet className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Upload CSV File
+              Subir Archivo CSV
             </h3>
             <p className="text-gray-600 mb-6">
-              Drag and drop your CSV file here, or click to browse
+              Arrastra y suelta tu archivo CSV aquí, o haz clic para buscar
             </p>
             <input
               type="file"
@@ -122,10 +122,10 @@ export default function ProductImportPage() {
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
             >
               <Upload className="w-5 h-5" />
-              <span>Select File</span>
+              <span>Seleccionar Archivo</span>
             </label>
             <p className="text-xs text-gray-500 mt-4">
-              Required columns: code, name, price. Optional: category, description
+              Columnas requeridas: code, name, price. Opcional: category, description
             </p>
           </div>
 
@@ -133,7 +133,7 @@ export default function ProductImportPage() {
             <div className="mt-6">
               <div className="flex items-center justify-between mb-4">
                 <h4 className="font-medium text-gray-900">
-                  Selected File: {file.name}
+                  Archivo Seleccionado: {file.name}
                 </h4>
                 <button
                   onClick={() => {
@@ -143,7 +143,7 @@ export default function ProductImportPage() {
                   }}
                   className="text-sm text-red-600 hover:text-red-800"
                 >
-                  Remove
+                  Eliminar
                 </button>
               </div>
 
@@ -178,7 +178,7 @@ export default function ProductImportPage() {
                     </tbody>
                   </table>
                   <p className="text-xs text-gray-500 p-2 bg-gray-50 border-t">
-                    Showing first 5 rows preview
+                    Mostrando vista previa de las primeras 5 filas
                   </p>
                 </div>
               )}
@@ -203,10 +203,10 @@ export default function ProductImportPage() {
               <div className="flex justify-end">
                 <button
                   onClick={handleImport}
-                  disabled={loading || !!status?.message?.includes("completed")}
+                  disabled={loading || !!status?.message?.includes("completada")}
                   className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
                 >
-                  {loading ? "Importing..." : "Start Import"}
+                  {loading ? "Importando..." : "Iniciar Importación"}
                 </button>
               </div>
             </div>

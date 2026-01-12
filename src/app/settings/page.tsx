@@ -22,20 +22,20 @@ interface Settings {
 const TEMPLATES = [
   {
     id: "modern",
-    name: "Modern",
-    description: "A clean, professional design with bold headers and clear typography.",
+    name: "Moderno",
+    description: "Un diseño limpio y profesional con encabezados llamativos y tipografía clara.",
     image: "/templates/modern.png",
   },
   {
     id: "classic",
-    name: "Classic",
-    description: "Traditional layout with serif fonts and formal styling.",
+    name: "Clásico",
+    description: "Diseño tradicional con fuentes serif y estilo formal.",
     image: "/templates/classic.png",
   },
   {
     id: "minimal",
-    name: "Minimal",
-    description: "Simple and airy, focusing on content with minimal distractions.",
+    name: "Minimalista",
+    description: "Simple y espacioso, enfocado en el contenido con mínimas distracciones.",
     image: "/templates/minimal.png",
   },
 ];
@@ -80,11 +80,11 @@ export default function SettingsPage() {
       if (response.ok) {
         // Optional: Show a toast notification
       } else {
-        alert("Failed to save settings");
+        alert("Error al guardar la configuración");
       }
     } catch (error) {
       console.error("Error saving settings:", error);
-      alert("Error saving settings");
+      alert("Error al guardar la configuración");
     } finally {
       setSaving(false);
     }
@@ -113,18 +113,18 @@ export default function SettingsPage() {
         const data = await response.json();
         setSettings({ ...settings, logoUrl: data.url });
       } else {
-        alert("Failed to upload logo");
+        alert("Error al subir el logo");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      alert("Error uploading file");
+      alert("Error al subir el archivo");
     } finally {
       setUploading(false);
     }
   };
 
   const handleGenerateWithAI = () => {
-    alert("AI Generation coming soon!");
+    alert("¡Generación con IA próximamente!");
   };
 
   if (loading) {
@@ -147,8 +147,8 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-             <h1 className="text-2xl font-bold text-gray-900">Invoice Settings</h1>
-             <p className="text-gray-500 mt-1">Manage your business details and invoice templates</p>
+             <h1 className="text-2xl font-bold text-gray-900">Configuración de Factura</h1>
+             <p className="text-gray-500 mt-1">Administra los detalles de tu negocio y plantillas de facturas</p>
           </div>
           <button
             onClick={() => handleSubmit()}
@@ -160,7 +160,7 @@ export default function SettingsPage() {
             ) : (
               <Save className="w-5 h-5" />
             )}
-            <span>Save Changes</span>
+            <span>Guardar Cambios</span>
           </button>
         </div>
 
@@ -169,13 +169,13 @@ export default function SettingsPage() {
           <div className="xl:col-span-5 space-y-6">
              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-bold text-gray-900">Explore Invoice Template</h2>
+                    <h2 className="text-lg font-bold text-gray-900">Explorar Plantillas</h2>
                     <button
                         onClick={handleGenerateWithAI}
                         className="flex items-center space-x-2 text-xs font-semibold text-white bg-gradient-to-r from-indigo-500 to-violet-600 px-3 py-1.5 rounded-full hover:shadow-md transition-all"
                     >
                         <Sparkles className="w-3 h-3" />
-                        <span>AI Generate</span>
+                        <span>Generar con IA</span>
                     </button>
                 </div>
 
@@ -220,7 +220,7 @@ export default function SettingsPage() {
           {/* Right Column (Form) */}
           <div className="xl:col-span-7 space-y-6">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-              <h2 className="text-lg font-bold text-gray-900 mb-6">Business Information</h2>
+              <h2 className="text-lg font-bold text-gray-900 mb-6">Información del Negocio</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 
                 {/* Logo Upload Section */}
@@ -241,9 +241,9 @@ export default function SettingsPage() {
                             </div>
                         )}
                         <p className="text-sm font-medium text-gray-900">
-                            {settings.logoUrl ? "Click to change logo" : "Upload your logo"}
+                            {settings.logoUrl ? "Clic para cambiar logo" : "Sube tu logo"}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">PNG, JPG up to 2MB</p>
+                        <p className="text-xs text-gray-400 mt-1">PNG, JPG hasta 2MB</p>
                     </div>
                      <input
                         type="file"
@@ -257,19 +257,19 @@ export default function SettingsPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Company Name</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Nombre de la Empresa</label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-gray-900"
                       value={settings.companyName}
                       onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
-                      placeholder="e.g. Acme Corp"
+                      placeholder="ej. Empresa S.A.C."
                       required
                     />
                   </div>
 
                    <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Primary Color</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Color Primario</label>
                     <div className="flex items-center space-x-3 p-2 border border-gray-200 rounded-lg bg-gray-50">
                         <input
                         type="color"
@@ -282,7 +282,7 @@ export default function SettingsPage() {
                   </div>
 
                    <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Secondary Color</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Color Secundario</label>
                     <div className="flex items-center space-x-3 p-2 border border-gray-200 rounded-lg bg-gray-50">
                         <input
                         type="color"
@@ -295,35 +295,35 @@ export default function SettingsPage() {
                   </div>
 
                    <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Business Address</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Dirección del Negocio</label>
                     <textarea
                       rows={3}
                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-gray-900 resize-none"
                       value={settings.companyAddress || ""}
                       onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
-                      placeholder="Street, City, Country..."
+                      placeholder="Calle, Ciudad, País..."
                     />
                   </div>
                 
                  <div>
-                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Contact Email</label>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Correo de Contacto</label>
                     <input
                       type="email"
                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-gray-900"
                       value={settings.companyEmail || ""}
                       onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
-                      placeholder="info@example.com"
+                      placeholder="info@ejemplo.com"
                     />
                   </div>
 
                   <div>
-                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Tax ID / RUC</label>
+                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">RUC / ID Fiscal</label>
                     <input
                       type="text"
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-medium text-gray-900"
                       value={settings.companyTaxId || ""}
                       onChange={(e) => setSettings({ ...settings, companyTaxId: e.target.value })}
-                       placeholder="e.g. 1234567890"
+                       placeholder="ej. 20123456789"
                     />
                   </div>
                 </div>

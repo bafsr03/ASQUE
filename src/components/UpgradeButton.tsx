@@ -28,7 +28,7 @@ export const UpgradeButton = () => {
       className="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-all transform hover:scale-105 disabled:opacity-50 shadow-md"
     >
       <Zap className="w-4 h-4" />
-      <span>{loading ? "Processing..." : "Upgrade to Pro"}</span>
+      <span>{loading ? "Procesando..." : "Mejorar a Pro"}</span>
     </button>
   );
 };

@@ -56,19 +56,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <nav className="flex-1 px-4 space-y-1 py-2 overflow-y-auto">
           <div className="px-4 mb-2 pb-2">
              <button className="w-full text-left px-4 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-xl text-sm font-medium shadow-sm hover:bg-gray-50 flex items-center justify-between transition-all group">
-                <span className="group-hover:text-indigo-600 transition-colors">Inbox</span>
+                <span className="group-hover:text-indigo-600 transition-colors">Bandeja</span>
                 <span className="bg-indigo-50 text-indigo-600 text-xs px-2 py-0.5 rounded-md font-semibold">4</span>
              </button>
           </div>
 
-           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-3 px-6">Manage</div>
+           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-3 px-6">Gestionar</div>
             <NavLink 
               href="/dashboard" 
               icon={<LayoutDashboard className="w-5 h-5" />} 
               active={pathname === "/dashboard"}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Overview
+              Resumen
             </NavLink>
             <NavLink 
               href="/quotes" 
@@ -76,7 +76,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               active={pathname?.startsWith("/quotes")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Invoices
+              Cotizaciones
             </NavLink>
              <NavLink 
               href="/products" 
@@ -84,7 +84,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               active={pathname?.startsWith("/products")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Products
+              Productos
             </NavLink>
             <NavLink 
               href="/clients" 
@@ -92,17 +92,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               active={pathname?.startsWith("/clients")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Clients
+              Clientes
             </NavLink>
 
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-3 px-6">System</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-3 px-6">Sistema</div>
              <NavLink 
               href="/settings" 
               icon={<Settings className="w-5 h-5" />} 
               active={pathname === "/settings"}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Settings
+              Configuración
             </NavLink>
              <NavLink 
               href="/tutorial" 
@@ -120,12 +120,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
              {/* Abstract blob for visual interest */}
              <div className="absolute top-0 right-0 w-16 h-16 bg-white rounded-full blur-2xl -mr-8 -mt-8 opacity-60"></div>
              
-             <h4 className="font-bold text-indigo-900 mb-1 relative z-10">Get 40% discount</h4>
+             <h4 className="font-bold text-indigo-900 mb-1 relative z-10">Obtén 40% de descuento</h4>
              <p className="text-xs text-indigo-600/80 mb-4 relative z-10 leading-relaxed font-medium">
-                Upgrade your free trial today!
+                ¡Mejora tu prueba gratuita hoy!
              </p>
              <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors relative z-10 shadow-md shadow-indigo-200">
-                Upgrade Plan
+                Mejorar Plan
              </button>
            </div>
         </div>
@@ -144,7 +144,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-gray-900 truncate group-hover:text-indigo-600 transition-colors">
-                  {user?.fullName || user?.firstName || "User"}
+                  {user?.fullName || user?.firstName || "Usuario"}
                 </p>
                 <p className="text-xs text-gray-500 truncate">
                   {user?.emailAddresses[0]?.emailAddress}
@@ -155,7 +155,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <SignedOut>
              <SignInButton mode="modal">
                 <button className="w-full bg-indigo-600 text-white px-4 py-2.5 rounded-xl hover:bg-indigo-700 transition-colors text-sm font-medium shadow-md">
-                  Sign In
+                  Iniciar Sesión
                 </button>
               </SignInButton>
           </SignedOut>

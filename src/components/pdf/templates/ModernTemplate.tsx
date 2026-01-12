@@ -1,3 +1,5 @@
+"use client";
+
 import { Document, Page, Text, View, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
@@ -243,7 +245,7 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
             )}
           </View>
           <View style={styles.companyInfo}>
-            <Text style={dynamicStyles.companyName}>{settings?.companyName || "Your Company Name"}</Text>
+            <Text style={dynamicStyles.companyName}>{settings?.companyName || "Tu Nombre de Empresa"}</Text>
             {settings?.companyAddress && <Text>{settings.companyAddress}</Text>}
             {settings?.companyEmail && <Text>{settings.companyEmail}</Text>}
             {settings?.companyPhone && <Text>{settings.companyPhone}</Text>}
@@ -251,37 +253,37 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
           </View>
         </View>
 
-        <Text style={dynamicStyles.title}>QUOTATION</Text>
+        <Text style={dynamicStyles.title}>COTIZACIÓN</Text>
 
         {/* Info Grid */}
         <View style={styles.grid}>
           <View style={styles.col6}>
-            <Text style={styles.label}>BILL TO</Text>
+            <Text style={styles.label}>FACTURAR A</Text>
             <Text style={styles.value}>{quote.client.name}</Text>
             <Text style={styles.value}>{quote.client.taxId}</Text>
             {quote.client.address && <Text>{quote.client.address}</Text>}
-            {quote.client.contact && <Text>Attn: {quote.client.contact}</Text>}
+            {quote.client.contact && <Text>Atn: {quote.client.contact}</Text>}
           </View>
           <View style={styles.col6}>
             <View style={{ flexDirection: "row", marginBottom: 4 }}>
               <View style={{ width: 80 }}>
-                <Text style={styles.label}>QUOTE #</Text>
+                <Text style={styles.label}>COTIZACIÓN #</Text>
                 <Text style={styles.value}>{quote.quoteNumber}</Text>
               </View>
               <View>
-                <Text style={styles.label}>DATE</Text>
+                <Text style={styles.label}>FECHA</Text>
                 <Text style={styles.value}>{formatDate(quote.date)}</Text>
               </View>
             </View>
             <View style={{ flexDirection: "row" }}>
               <View style={{ width: 80 }}>
-                <Text style={styles.label}>VALID UNTIL</Text>
+                <Text style={styles.label}>VÁLIDO HASTA</Text>
                 <Text style={styles.value}>
                   {formatDate(new Date(new Date(quote.date).setDate(new Date(quote.date).getDate() + quote.validityDays)))}
                 </Text>
               </View>
               <View>
-                <Text style={styles.label}>AGENT</Text>
+                <Text style={styles.label}>AGENTE</Text>
                 <Text style={styles.value}>{quote.agentName || "-"}</Text>
               </View>
             </View>
@@ -291,10 +293,10 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
         {/* Items Table */}
         <View style={styles.table}>
           <View style={dynamicStyles.tableHeader}>
-            <Text style={styles.colDesc}>DESCRIPTION</Text>
-            <Text style={styles.colQty}>QTY</Text>
-            <Text style={styles.colPrice}>UNIT PRICE</Text>
-            <Text style={styles.colTotal}>AMOUNT</Text>
+            <Text style={styles.colDesc}>DESCRIPCIÓN</Text>
+            <Text style={styles.colQty}>CANT</Text>
+            <Text style={styles.colPrice}>PRECIO UNIT.</Text>
+            <Text style={styles.colTotal}>TOTAL</Text>
           </View>
           {quote.items.map((item: any, index: number) => (
             <View key={index} style={styles.tableRow}>
@@ -320,7 +322,7 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
           </View>
           {quote.discount > 0 && (
             <View style={styles.totalRow}>
-              <Text style={styles.totalLabel}>Discount:</Text>
+              <Text style={styles.totalLabel}>Descuento:</Text>
               <Text style={{ ...styles.totalValue, color: "red" }}>-{formatCurrency(quote.discount)}</Text>
             </View>
           )}
@@ -337,16 +339,16 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
         {/* Notes & Terms */}
         {(quote.notes || quote.paymentTerms) && (
           <View style={styles.section}>
-            <Text style={dynamicStyles.sectionTitle}>Terms & Notes</Text>
+            <Text style={dynamicStyles.sectionTitle}>Términos y Notas</Text>
             {quote.paymentTerms && (
               <View style={{ marginBottom: 8 }}>
-                <Text style={{ ...styles.label, marginBottom: 2 }}>PAYMENT TERMS</Text>
+                <Text style={{ ...styles.label, marginBottom: 2 }}>TÉRMINOS DE PAGO</Text>
                 <Text style={styles.text}>{quote.paymentTerms}</Text>
               </View>
             )}
             {quote.notes && (
               <View>
-                <Text style={{ ...styles.label, marginBottom: 2 }}>NOTES</Text>
+                <Text style={{ ...styles.label, marginBottom: 2 }}>NOTAS</Text>
                 <Text style={styles.text}>{quote.notes}</Text>
               </View>
             )}
@@ -354,14 +356,14 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
         )}
 
         <Text style={styles.footer}>
-          Thank you for your business!
+          ¡Gracias por su preferencia!
         </Text>
       </Page>
 
       {/* Product Details Appendix */}
       <Page size="A4" style={{ ...styles.page, fontFamily: fontFamily }}>
         <View style={styles.header}>
-          <Text style={dynamicStyles.title}>Product Details & Specifications</Text>
+          <Text style={dynamicStyles.title}>Detalles y Especificaciones del Producto</Text>
         </View>
 
         {quote.items.map((item: any, index: number) => (
@@ -374,14 +376,14 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
 
             {item.product.specs && (
               <View style={{ marginTop: 8 }}>
-                <Text style={styles.label}>TECHNICAL SPECIFICATIONS</Text>
+                <Text style={styles.label}>ESPECIFICACIONES TÉCNICAS</Text>
                 <Text style={styles.specs}>{item.product.specs}</Text>
               </View>
             )}
 
             {item.product.links && item.product.links.length > 0 && (
               <View style={{ marginTop: 8 }}>
-                <Text style={styles.label}>RESOURCES</Text>
+                <Text style={styles.label}>RECURSOS</Text>
                 {item.product.links.map((link: any, i: number) => (
                   <Text key={i} style={dynamicStyles.link}>
                     • {link.label || link.linkType}: {link.url}
@@ -393,7 +395,7 @@ export default function ModernTemplate({ quote, settings }: TemplateProps) {
         ))}
 
         <Text style={styles.footer}>
-          Page 2 - Product Details
+          Página 2 - Detalles del Producto
         </Text>
       </Page>
     </Document>

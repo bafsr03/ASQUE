@@ -1,3 +1,5 @@
+"use client";
+
 import { Document, Page, Text, View, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
@@ -190,7 +192,7 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
               )}
             </View>
             <View style={styles.companyInfo}>
-              <Text style={styles.companyName}>{settings?.companyName || "Your Company Name"}</Text>
+              <Text style={styles.companyName}>{settings?.companyName || "Tu Nombre de Empresa"}</Text>
               {settings?.companyAddress && <Text>{settings.companyAddress}</Text>}
               {settings?.companyEmail && <Text>{settings.companyEmail}</Text>}
               {settings?.companyPhone && <Text>{settings.companyPhone}</Text>}
@@ -198,13 +200,13 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
           </View>
           
           <View style={{ alignItems: "flex-end" }}>
-            <Text style={styles.title}>Quotation</Text>
+            <Text style={styles.title}>Cotización</Text>
             <View style={{ marginBottom: 10, alignItems: "flex-end" }}>
-              <Text style={styles.label}>Quote No.</Text>
+              <Text style={styles.label}>Cotización No.</Text>
               <Text style={styles.value}>{quote.quoteNumber}</Text>
             </View>
             <View style={{ alignItems: "flex-end" }}>
-              <Text style={styles.label}>Date</Text>
+              <Text style={styles.label}>Fecha</Text>
               <Text style={styles.value}>{formatDate(quote.date)}</Text>
             </View>
           </View>
@@ -213,17 +215,17 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
         {/* Client Info */}
         <View style={styles.grid}>
           <View style={styles.col6}>
-            <Text style={styles.label}>Prepared For</Text>
+            <Text style={styles.label}>Preparado Para</Text>
             <Text style={styles.value}>{quote.client.name}</Text>
             <Text style={styles.value}>{quote.client.taxId}</Text>
             {quote.client.address && <Text>{quote.client.address}</Text>}
           </View>
           <View style={styles.col6}>
-            <Text style={styles.label}>Valid Until</Text>
+            <Text style={styles.label}>Válido Hasta</Text>
             <Text style={styles.value}>
               {formatDate(new Date(new Date(quote.date).setDate(new Date(quote.date).getDate() + quote.validityDays)))}
             </Text>
-            <Text style={styles.label}>Agent</Text>
+            <Text style={styles.label}>Agente</Text>
             <Text style={styles.value}>{quote.agentName || "-"}</Text>
           </View>
         </View>
@@ -231,9 +233,9 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
         {/* Items Table */}
         <View style={styles.table}>
           <View style={styles.tableHeader}>
-            <Text style={styles.colDesc}>Item</Text>
-            <Text style={styles.colQty}>Qty</Text>
-            <Text style={styles.colPrice}>Price</Text>
+            <Text style={styles.colDesc}>Ítem</Text>
+            <Text style={styles.colQty}>Cant.</Text>
+            <Text style={styles.colPrice}>Precio</Text>
             <Text style={styles.colTotal}>Total</Text>
           </View>
           {quote.items.map((item: any, index: number) => (
@@ -257,12 +259,12 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
           </View>
           {quote.discount > 0 && (
             <View style={styles.totalRow}>
-              <Text style={styles.totalLabel}>Discount</Text>
+              <Text style={styles.totalLabel}>Descuento</Text>
               <Text style={{ ...styles.totalValue, color: "red" }}>-{formatCurrency(quote.discount)}</Text>
             </View>
           )}
           <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Tax (18%)</Text>
+            <Text style={styles.totalLabel}>IGV (18%)</Text>
             <Text style={styles.totalValue}>{formatCurrency(tax)}</Text>
           </View>
           <View style={styles.grandTotal}>
@@ -274,16 +276,16 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
         {/* Notes & Terms */}
         {(quote.notes || quote.paymentTerms) && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Notes</Text>
+            <Text style={styles.sectionTitle}>Notas</Text>
             {quote.paymentTerms && (
               <View style={{ marginBottom: 10 }}>
-                <Text style={{ ...styles.label, marginBottom: 2 }}>Payment</Text>
+                <Text style={{ ...styles.label, marginBottom: 2 }}>Pago</Text>
                 <Text style={styles.text}>{quote.paymentTerms}</Text>
               </View>
             )}
             {quote.notes && (
               <View>
-                <Text style={{ ...styles.label, marginBottom: 2 }}>Additional Info</Text>
+                <Text style={{ ...styles.label, marginBottom: 2 }}>Información Adicional</Text>
                 <Text style={styles.text}>{quote.notes}</Text>
               </View>
             )}
@@ -298,7 +300,7 @@ export default function MinimalTemplate({ quote, settings }: TemplateProps) {
       {/* Product Details Appendix */}
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.title}>Specifications</Text>
+          <Text style={styles.title}>Especificaciones</Text>
         </View>
 
         {quote.items.map((item: any, index: number) => (

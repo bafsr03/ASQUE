@@ -124,12 +124,12 @@ export default function NewQuotePage() {
     e.preventDefault();
 
     if (!formData.clientId) {
-      alert("Please select a client");
+      alert("Por favor selecciona un cliente");
       return;
     }
 
     if (items.length === 0) {
-      alert("Please add at least one product");
+      alert("Por favor agrega al menos un producto");
       return;
     }
 
@@ -160,11 +160,11 @@ export default function NewQuotePage() {
         router.push(`/quotes/${quote.id}`);
       } else {
         const data = await response.json();
-        alert(data.error || "Failed to create quote");
+        alert(data.error || "Error al crear cotización");
       }
     } catch (error) {
       console.error("Error creating quote:", error);
-      alert("Failed to create quote");
+      alert("Error al crear cotización");
     } finally {
       setLoading(false);
     }
@@ -174,21 +174,21 @@ export default function NewQuotePage() {
     <DashboardLayout>
       <div className="max-w-6xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Create New Quote</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Crear Nueva Cotización</h1>
           <p className="text-gray-600 mt-1">
-            Build a professional quotation with automatic product descriptions
+            Crea una cotización profesional con descripciones automáticas de productos
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Quote Details */}
           <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
-            <h2 className="text-xl font-semibold text-gray-900">Quote Details</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Detalles de la Cotización</h2>
             
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Client *
+                  Cliente *
                 </label>
                 <select
                   required
@@ -198,7 +198,7 @@ export default function NewQuotePage() {
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
                 >
-                  <option value="">Select a client...</option>
+                  <option value="">Selecciona un cliente...</option>
                   {clients.map((client) => (
                     <option key={client.id} value={client.id}>
                       {client.name} - {client.taxId}
@@ -209,7 +209,7 @@ export default function NewQuotePage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Agent Name
+                  Nombre del Agente
                 </label>
                 <input
                   type="text"
@@ -218,13 +218,13 @@ export default function NewQuotePage() {
                     setFormData({ ...formData, agentName: e.target.value })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                  placeholder="Sales agent name"
+                  placeholder="Nombre del agente de ventas"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Validity (days)
+                  Validez (días)
                 </label>
                 <input
                   type="number"
@@ -238,7 +238,7 @@ export default function NewQuotePage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Global Discount (S/)
+                  Descuento Global (S/)
                 </label>
                 <input
                   type="number"
@@ -253,7 +253,7 @@ export default function NewQuotePage() {
 
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Payment Terms
+                  Términos de Pago
                 </label>
                 <textarea
                   value={formData.paymentTerms}
@@ -262,13 +262,13 @@ export default function NewQuotePage() {
                   }
                   rows={2}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                  placeholder="Payment terms and conditions..."
+                  placeholder="Términos y condiciones de pago..."
                 />
               </div>
 
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Notes
+                  Notas
                 </label>
                 <textarea
                   value={formData.notes}
@@ -277,7 +277,7 @@ export default function NewQuotePage() {
                   }
                   rows={2}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500"
-                  placeholder="Internal notes..."
+                  placeholder="Notas internas..."
                 />
               </div>
             </div>
@@ -286,14 +286,14 @@ export default function NewQuotePage() {
           {/* Products */}
           <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900">Products</h2>
+              <h2 className="text-xl font-semibold text-gray-900">Productos</h2>
               <button
                 type="button"
                 onClick={() => setShowProductSearch(!showProductSearch)}
                 className="flex items-center space-x-1 text-orange-600 hover:text-orange-700 text-sm font-medium"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Product</span>
+                <span>Agregar Producto</span>
               </button>
             </div>
 
@@ -304,7 +304,7 @@ export default function NewQuotePage() {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                   <input
                     type="text"
-                    placeholder="Search products by code or name..."
+                    placeholder="Buscar productos por código o nombre..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm"
@@ -330,7 +330,7 @@ export default function NewQuotePage() {
             {/* Items Table */}
             {items.length === 0 ? (
               <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-lg">
-                <p className="text-gray-600">No products added yet</p>
+                <p className="text-gray-600">No se han agregado productos aún</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -338,19 +338,19 @@ export default function NewQuotePage() {
                   <thead className="bg-gray-50">
                     <tr>
                       <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">
-                        Code
+                        Código
                       </th>
                       <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">
-                        Product
+                        Producto
                       </th>
                       <th className="px-4 py-2 text-center text-xs font-medium text-gray-500">
-                        Qty
+                        Cant.
                       </th>
                       <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">
-                        Price
+                        Precio
                       </th>
                       <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">
-                        Discount
+                        Descuento
                       </th>
                       <th className="px-4 py-2 text-right text-xs font-medium text-gray-500">
                         Subtotal
@@ -431,7 +431,7 @@ export default function NewQuotePage() {
                   </div>
                   {totals.discount > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Discount:</span>
+                      <span className="text-gray-600">Descuento:</span>
                       <span className="text-red-600">-{formatCurrency(totals.discount)}</span>
                     </div>
                   )}
@@ -455,14 +455,14 @@ export default function NewQuotePage() {
               onClick={() => router.back()}
               className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
               className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50"
             >
-              {loading ? "Creating..." : "Create Quote"}
+              {loading ? "Creando..." : "Crear Cotización"}
             </button>
           </div>
         </form>
