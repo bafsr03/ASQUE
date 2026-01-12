@@ -131,7 +131,7 @@ export default function SettingsPage() {
     return (
       <DashboardLayout>
         <div className="flex justify-center items-center h-64">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
         </div>
       </DashboardLayout>
     );
@@ -153,7 +153,7 @@ export default function SettingsPage() {
           <button
             onClick={() => handleSubmit()}
             disabled={saving}
-            className="flex items-center space-x-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-all font-medium shadow-sm hover:shadow-md"
+            className="flex items-center space-x-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-all font-medium shadow-sm hover:shadow-md"
           >
             {saving ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -172,7 +172,7 @@ export default function SettingsPage() {
                     <h2 className="text-lg font-bold text-gray-900">Explore Invoice Template</h2>
                     <button
                         onClick={handleGenerateWithAI}
-                        className="flex items-center space-x-2 text-xs font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-1.5 rounded-full hover:shadow-md transition-all"
+                        className="flex items-center space-x-2 text-xs font-semibold text-white bg-gradient-to-r from-indigo-500 to-violet-600 px-3 py-1.5 rounded-full hover:shadow-md transition-all"
                     >
                         <Sparkles className="w-3 h-3" />
                         <span>AI Generate</span>
@@ -186,8 +186,8 @@ export default function SettingsPage() {
                         onClick={() => handleTemplateSelect(template.id)}
                         className={`group cursor-pointer rounded-xl border transition-all duration-200 overflow-hidden relative ${
                         settings.template === template.id
-                            ? "border-blue-600 ring-4 ring-blue-50 shadow-md"
-                            : "border-gray-100 hover:border-blue-200 hover:shadow-md"
+                            ? "border-indigo-600 ring-4 ring-indigo-50 shadow-md"
+                            : "border-gray-100 hover:border-indigo-200 hover:shadow-md"
                         }`}
                     >
                         <div className="flex">
@@ -203,7 +203,7 @@ export default function SettingsPage() {
                                 <div className="flex justify-between items-start mb-1">
                                     <h3 className="font-bold text-gray-900">{template.name}</h3>
                                     {settings.template === template.id && (
-                                        <div className="bg-blue-600 text-white p-1 rounded-full">
+                                        <div className="bg-indigo-600 text-white p-1 rounded-full">
                                             <Check className="w-3 h-3" />
                                         </div>
                                     )}
@@ -236,7 +236,7 @@ export default function SettingsPage() {
                                 />
                             </div>
                         ) : (
-                            <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm text-blue-500">
+                            <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm text-indigo-500">
                                 <Upload className="w-8 h-8" />
                             </div>
                         )}
@@ -260,7 +260,7 @@ export default function SettingsPage() {
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Company Name</label>
                     <input
                       type="text"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-medium text-gray-900"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-gray-900"
                       value={settings.companyName}
                       onChange={(e) => setSettings({ ...settings, companyName: e.target.value })}
                       placeholder="e.g. Acme Corp"
@@ -298,7 +298,7 @@ export default function SettingsPage() {
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Business Address</label>
                     <textarea
                       rows={3}
-                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-medium text-gray-900 resize-none"
+                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-gray-900 resize-none"
                       value={settings.companyAddress || ""}
                       onChange={(e) => setSettings({ ...settings, companyAddress: e.target.value })}
                       placeholder="Street, City, Country..."
@@ -309,7 +309,7 @@ export default function SettingsPage() {
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Contact Email</label>
                     <input
                       type="email"
-                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all font-medium text-gray-900"
+                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-gray-900"
                       value={settings.companyEmail || ""}
                       onChange={(e) => setSettings({ ...settings, companyEmail: e.target.value })}
                       placeholder="info@example.com"

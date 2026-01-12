@@ -82,7 +82,7 @@ export default function QuotesPage() {
             <UpgradeButton />
             <Link
               href="/quotes/new"
-              className="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition-colors"
+              className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
             >
               <Plus className="w-5 h-5" />
               <span>New Quote</span>
@@ -93,7 +93,7 @@ export default function QuotesPage() {
         {/* Quotes List */}
         {loading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
           </div>
         ) : quotes.length === 0 ? (
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
@@ -106,7 +106,7 @@ export default function QuotesPage() {
             </p>
             <Link
               href="/quotes/new"
-              className="inline-flex items-center space-x-2 bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 transition-colors"
+              className="inline-flex items-center space-x-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
             >
               <Plus className="w-5 h-5" />
               <span>New Quote</span>
@@ -166,7 +166,7 @@ export default function QuotesPage() {
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Link
                           href={`/quotes/${quote.id}`}
-                          className="text-orange-600 hover:text-orange-900"
+                          className="text-indigo-600 hover:text-indigo-900 font-medium"
                         >
                           View
                         </Link>

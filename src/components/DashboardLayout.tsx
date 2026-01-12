@@ -28,18 +28,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Sidebar (Desktop & Mobile Drawer) */}
       <aside 
         className={`
-          w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-50 transition-transform duration-300 ease-in-out
+          w-64 bg-[#F9FAFB] border-r border-gray-100 flex flex-col fixed h-full z-50 transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
       >
         {/* Logo Area */}
-        <div className="p-6 flex items-center justify-between">
+        <div className="px-6 py-8 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-sm">
-               <span className="text-white font-bold text-lg">A</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+               <span className="text-white font-bold text-xl">A</span>
             </div>
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
+            <span className="text-xl font-bold text-gray-900 tracking-tight">
               ASQUE
             </span>
           </div>
@@ -53,16 +53,22 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 space-y-2 py-4 overflow-y-auto">
-          <SignedIn>
-             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 px-4">Menu</div>
+        <nav className="flex-1 px-4 space-y-1 py-2 overflow-y-auto">
+          <div className="px-4 mb-2 pb-2">
+             <button className="w-full text-left px-4 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-xl text-sm font-medium shadow-sm hover:bg-gray-50 flex items-center justify-between transition-all group">
+                <span className="group-hover:text-indigo-600 transition-colors">Inbox</span>
+                <span className="bg-indigo-50 text-indigo-600 text-xs px-2 py-0.5 rounded-md font-semibold">4</span>
+             </button>
+          </div>
+
+           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-6 mb-3 px-6">Manage</div>
             <NavLink 
               href="/dashboard" 
               icon={<LayoutDashboard className="w-5 h-5" />} 
               active={pathname === "/dashboard"}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Dashboard
+              Overview
             </NavLink>
             <NavLink 
               href="/quotes" 
@@ -89,7 +95,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               Clients
             </NavLink>
 
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-4 px-4">System</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-3 px-6">System</div>
              <NavLink 
               href="/settings" 
               icon={<Settings className="w-5 h-5" />} 
@@ -106,23 +112,38 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             >
               Tutorial
             </NavLink>
-          </SignedIn>
         </nav>
 
+        {/* Promo / Upgrade Card */}
+        <div className="p-6">
+           <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 relative overflow-hidden">
+             {/* Abstract blob for visual interest */}
+             <div className="absolute top-0 right-0 w-16 h-16 bg-white rounded-full blur-2xl -mr-8 -mt-8 opacity-60"></div>
+             
+             <h4 className="font-bold text-indigo-900 mb-1 relative z-10">Get 40% discount</h4>
+             <p className="text-xs text-indigo-600/80 mb-4 relative z-10 leading-relaxed font-medium">
+                Upgrade your free trial today!
+             </p>
+             <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors relative z-10 shadow-md shadow-indigo-200">
+                Upgrade Plan
+             </button>
+           </div>
+        </div>
+
         {/* User Profile (Bottom) */}
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-gray-100 bg-white/50 backdrop-blur-sm">
           <SignedIn>
-            <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+            <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-white transition-all cursor-pointer group">
               <UserButton 
                 appearance={{
                   elements: {
-                    userButtonAvatarBox: "w-9 h-9",
+                    userButtonAvatarBox: "w-9 h-9 ring-2 ring-white shadow-sm",
                     userButtonTrigger: "focus:shadow-none"
                   }
                 }}
               />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-bold text-gray-900 truncate group-hover:text-indigo-600 transition-colors">
                   {user?.fullName || user?.firstName || "User"}
                 </p>
                 <p className="text-xs text-gray-500 truncate">
@@ -133,7 +154,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </SignedIn>
           <SignedOut>
              <SignInButton mode="modal">
-                <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+                <button className="w-full bg-indigo-600 text-white px-4 py-2.5 rounded-xl hover:bg-indigo-700 transition-colors text-sm font-medium shadow-md">
                   Sign In
                 </button>
               </SignInButton>

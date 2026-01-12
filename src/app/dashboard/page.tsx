@@ -39,46 +39,47 @@ export default async function DashboardPage() {
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         
         {!isPro && (
-             <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
+             <div className="bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow p-8 border border-gray-100">
                 <div className="flex justify-between items-start">
                     <div>
-                        <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-                            <Zap className="w-5 h-5 mr-2 text-orange-500" />
+                        <h2 className="text-xl font-bold text-gray-900 flex items-center mb-2">
+                            <Zap className="w-5 h-5 mr-3 text-orange-500" />
                             Free Plan Usage
                         </h2>
-                        <p className="text-gray-600 mt-1">
-                            You have used {usage} of {limit} free quotes.
+                        <p className="text-gray-500">
+                            You have used <span className="font-semibold text-gray-900">{usage}</span> of <span className="font-semibold text-gray-900">{limit}</span> free quotes.
                         </p>
                     </div>
                     {usage >= limit && (
-                        <div className="text-red-600 font-bold bg-red-50 px-3 py-1 rounded">
+                        <div className="text-red-600 text-xs font-bold bg-red-50 px-3 py-1.5 rounded-full border border-red-100">
                             Limit Reached
                         </div>
                     )}
                 </div>
-                <div className="mt-4">
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div className="mt-6 mb-6">
+                    <div className="w-full bg-gray-100 rounded-full h-3">
                         <div 
-                            className={`h-2.5 rounded-full ${usage >= limit ? 'bg-red-600' : 'bg-orange-500'}`} 
+                            className={`h-3 rounded-full transition-all duration-500 ${usage >= limit ? 'bg-red-500' : 'bg-orange-500'}`} 
                             style={{ width: `${percentage}%` }}
                         ></div>
                     </div>
                 </div>
-                <div className="mt-4 flex justify-end">
+                <div className="flex justify-end">
                     <UpgradeButton />
                 </div>
             </div>
         )}
 
         {isPro && (
-             <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-md p-6 text-white">
-                <div className="flex items-center space-x-3">
-                    <div className="p-3 bg-white/20 rounded-lg">
-                        <Zap className="w-6 h-6" />
+             <div className="bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-3xl shadow-lg p-8 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                <div className="flex items-center space-x-5 relative z-10">
+                    <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
+                        <Zap className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold">Pro Plan Active</h2>
-                        <p className="text-indigo-100">You have unlimited access to all features.</p>
+                        <h2 className="text-2xl font-bold mb-1">Pro Plan Active</h2>
+                        <p className="text-indigo-100 font-medium opacity-90">You have unlimited access to all features.</p>
                     </div>
                 </div>
             </div>
@@ -88,17 +89,17 @@ export default async function DashboardPage() {
           <StatCard
             title="Total Quotes"
             value={stats.quotes}
-            icon={<FileText className="w-6 h-6 text-blue-600" />}
+            icon={<FileText className="w-6 h-6 text-indigo-600" />}
           />
           <StatCard
             title="Clients"
             value={stats.clients}
-            icon={<Users className="w-6 h-6 text-green-600" />}
+            icon={<Users className="w-6 h-6 text-indigo-600" />}
           />
           <StatCard
             title="Products"
             value={stats.products}
-            icon={<Package className="w-6 h-6 text-purple-600" />}
+            icon={<Package className="w-6 h-6 text-indigo-600" />}
           />
         </div>
 
@@ -110,13 +111,13 @@ export default async function DashboardPage() {
 
 function StatCard({ title, value, icon }: { title: string; value: number; icon: React.ReactNode }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+    <div className="bg-white p-8 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 group">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-gray-500 font-medium">{title}</p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
+          <p className="text-gray-500 font-medium mb-2">{title}</p>
+          <p className="text-4xl font-bold text-gray-900 tracking-tight">{value}</p>
         </div>
-        <div className="p-3 bg-gray-50 rounded-lg">
+        <div className="p-4 bg-gray-50 rounded-2xl group-hover:bg-blue-50 transition-colors">
           {icon}
         </div>
       </div>

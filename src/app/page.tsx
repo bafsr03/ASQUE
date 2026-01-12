@@ -4,135 +4,133 @@ import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-[#F9FAFB]">
       <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Welcome to ASQUE
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-            Universal Quotation Management System - Create professional quotes
-            with automatic product descriptions in minutes
-          </p>
-          <div className="flex justify-center space-x-4">
-            <SignedOut>
+        
+        {/* Navigation / Header */}
+        <div className="flex justify-between items-center mb-20 max-w-6xl mx-auto">
+          <div className="flex items-center space-x-3">
+             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+               <span className="text-white font-bold text-xl">A</span>
+            </div>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">ASQUE</span>
+          </div>
+          <div className="space-x-4">
+            <Link href="/login" className="text-gray-600 hover:text-indigo-600 font-medium transition-colors">Log in</Link>
+             <SignedOut>
                 <SignInButton mode="modal">
-                    <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg font-semibold shadow-md">
+                     <button className="bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-colors font-semibold shadow-lg shadow-indigo-200">
                         Get Started
                     </button>
                 </SignInButton>
-            </SignedOut>
-            <SignedIn>
-                <Link href="/dashboard" className="bg-orange-600 text-white px-8 py-3 rounded-lg hover:bg-orange-700 transition-colors text-lg font-semibold shadow-md">
+             </SignedOut>
+             <SignedIn>
+                <Link href="/dashboard" className="bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-colors font-semibold shadow-lg shadow-indigo-200">
                     Go to Dashboard
                 </Link>
-            </SignedIn>
+             </SignedIn>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          <Link
-            href="/dashboard"
-            className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow group"
-          >
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                <LayoutDashboard className="w-8 h-8 text-blue-600" />
-              </div>
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Dashboard
-              </h2>
-              <p className="text-gray-600">
-                View analytics and recent activity
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/products"
-            className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow group"
-          >
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                <Package className="w-8 h-8 text-green-600" />
-              </div>
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Products
-              </h2>
-              <p className="text-gray-600">
-                Manage your product catalog
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/clients"
-            className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow group"
-          >
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                <Users className="w-8 h-8 text-purple-600" />
-              </div>
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Clients
-              </h2>
-              <p className="text-gray-600">
-                Manage client information
-              </p>
-            </div>
-          </Link>
-
-          <Link
-            href="/quotes"
-            className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow group"
-          >
-            <div className="flex flex-col items-center text-center space-y-4">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                <FileText className="w-8 h-8 text-orange-600" />
-              </div>
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Quotes
-              </h2>
-              <p className="text-gray-600">
-                Create and manage quotations
-              </p>
-            </div>
-          </Link>
-        </div>
-
-        <div className="mt-16 text-center">
-          <div className="bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-              Key Features
-            </h3>
-            <ul className="text-left space-y-3 text-gray-700">
-              <li className="flex items-start">
-                <span className="text-blue-600 mr-2">✓</span>
-                Automatic product description integration in PDFs
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-600 mr-2">✓</span>
-                Quick quote creation with product search
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-600 mr-2">✓</span>
-                Professional PDF generation with technical specs and links
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-600 mr-2">✓</span>
-                Client database with RUC/Tax ID management
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-600 mr-2">✓</span>
-                Automatic IGV (tax) calculations
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-600 mr-2">✓</span>
-                CSV product import for bulk uploads
-              </li>
-            </ul>
+        {/* Hero Section */}
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-block bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 border border-indigo-100">
+            New: AI-Powered Quotations 🚀
+          </div>
+          <h1 className="text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+            Supercharge your <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">
+               Sales Workflow
+            </span>
+          </h1>
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Create professional quotes with automatic product descriptions in seconds. 
+            The universal quotation management system designed for modern businesses.
+          </p>
+          
+           <div className="flex justify-center space-x-4">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="bg-indigo-600 text-white px-8 py-4 rounded-full hover:bg-indigo-700 transition-all hover:scale-105 font-bold shadow-xl shadow-indigo-200 text-lg flex items-center">
+                  Start Free Trial <span className="ml-2">→</span>
+                </button>
+              </SignInButton>
+            </SignedOut>
+             <SignedIn>
+                <Link href="/dashboard" className="bg-indigo-600 text-white px-8 py-4 rounded-full hover:bg-indigo-700 transition-all hover:scale-105 font-bold shadow-xl shadow-indigo-200 text-lg flex items-center">
+                    Enter Workspace <span className="ml-2">→</span>
+                </Link>
+             </SignedIn>
+             <button className="bg-white text-gray-700 px-8 py-4 rounded-full hover:bg-gray-50 border border-gray-200 transition-all font-bold text-lg hover:border-gray-300">
+                View Demo
+             </button>
           </div>
         </div>
+
+        {/* Hero Image Placeholder */}
+        <div className="max-w-6xl mx-auto mb-24">
+           <div className="aspect-video bg-gray-200 rounded-3xl border-4 border-white shadow-2xl flex flex-col items-center justify-center text-gray-400 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-tr from-gray-100 to-gray-200 opacity-50"></div>
+              {/* Abstract UI Elements Placeholders */}
+              <div className="w-3/4 h-3/4 bg-white rounded-2xl shadow-lg relative top-8 transition-transform group-hover:-translate-y-2 duration-500">
+                 <div className="h-8 border-b border-gray-100 flex items-center px-4 space-x-2">
+                    <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                 </div>
+                 <div className="p-8 flex items-center justify-center h-full text-gray-300 font-medium text-lg">
+                    App Dashboard Interface Placeholder
+                 </div>
+              </div>
+              <span className="absolute bottom-4 text-sm font-medium">Hero Image: Dashboard Preview</span>
+           </div>
+        </div>
+
+        {/* Features Grid with Placeholders */}
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-24">
+           {/* Feature 1 */}
+           <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6">
+                 <Package className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Smart Catalog</h3>
+              <p className="text-gray-500 mb-6 leading-relaxed">
+                 Manage products with automatic description integration and technical specs linking.
+              </p>
+              <div className="aspect-video bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center text-xs text-gray-400">
+                 Product Card UI
+              </div>
+           </div>
+
+            {/* Feature 2 */}
+           <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-purple-600 mb-6">
+                 <FileText className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Instant Quotes</h3>
+              <p className="text-gray-500 mb-6 leading-relaxed">
+                 Generate PDF quotations in seconds. Choose from multiple professional templates.
+              </p>
+              <div className="aspect-video bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center text-xs text-gray-400">
+                 PDF Preview UI
+              </div>
+           </div>
+
+            {/* Feature 3 */}
+           <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600 mb-6">
+                 <Users className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">CRM Included</h3>
+              <p className="text-gray-500 mb-6 leading-relaxed">
+                 Keep track of your clients, their tax IDs, and history in one unified CRM.
+              </p>
+              <div className="aspect-video bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center text-xs text-gray-400">
+                 Client List UI
+              </div>
+           </div>
+        </div>
+
       </div>
     </div>
   );

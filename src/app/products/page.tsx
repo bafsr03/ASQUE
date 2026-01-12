@@ -67,7 +67,7 @@ export default function ProductsPage() {
           </div>
           <Link
             href="/products/new"
-            className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
           >
             <Plus className="w-5 h-5" />
             <span>Add Product</span>
@@ -83,7 +83,7 @@ export default function ProductsPage() {
               placeholder="Search products by code or name..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function ProductsPage() {
         {/* Products List */}
         {loading ? (
           <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
           </div>
         ) : products.length === 0 ? (
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
@@ -107,7 +107,7 @@ export default function ProductsPage() {
             {!search && (
               <Link
                 href="/products/new"
-                className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center space-x-2 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
               >
                 <Plus className="w-5 h-5" />
                 <span>Add Product</span>
@@ -176,7 +176,7 @@ export default function ProductsPage() {
                       <div className="flex items-center justify-end space-x-2">
                         <Link
                           href={`/products/${product.id}/edit`}
-                          className="text-blue-600 hover:text-blue-900"
+                          className="text-indigo-600 hover:text-indigo-900"
                         >
                           <Edit className="w-4 h-4" />
                         </Link>
@@ -196,21 +196,21 @@ export default function ProductsPage() {
         )}
 
         {/* Additional Actions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4">
           <div className="flex items-start space-x-3">
             <div className="flex-shrink-0">
-              <Package className="w-6 h-6 text-blue-600" />
+              <Package className="w-6 h-6 text-indigo-600" />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-medium text-blue-900">
+              <h3 className="text-sm font-medium text-indigo-900">
                 Bulk Import Products
               </h3>
-              <p className="text-sm text-blue-700 mt-1">
+              <p className="text-sm text-indigo-700/80 mt-1">
                 Import multiple products at once using a CSV file
               </p>
               <Link
                 href="/products/import"
-                className="inline-block mt-2 text-sm font-medium text-blue-600 hover:text-blue-800"
+                className="inline-block mt-2 text-sm font-medium text-indigo-600 hover:text-indigo-800"
               >
                 Go to Import →
               </Link>
