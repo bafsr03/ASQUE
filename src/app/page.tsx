@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Package, Users, FileText, LayoutDashboard } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
@@ -15,9 +15,9 @@ export default function Home() {
             </div>
             <span className="text-xl font-bold text-gray-900 tracking-tight">ASQUE</span>
           </div>
-          <div className="space-x-4">
-            <Link href="/sign-in" className="text-gray-600 hover:text-indigo-600 font-medium transition-colors">Iniciar sesión</Link>
-             <SignedOut>
+          <div className="space-x-4 flex items-center">
+            <SignedOut>
+               <Link href="/sign-in" className="text-gray-600 hover:text-indigo-600 font-medium transition-colors mr-4">Iniciar sesión</Link>
                 <SignInButton mode="modal">
                      <button className="bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-colors font-semibold shadow-lg shadow-indigo-200">
                         Comenzar
@@ -25,9 +25,10 @@ export default function Home() {
                 </SignInButton>
              </SignedOut>
              <SignedIn>
-                <Link href="/dashboard" className="bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-colors font-semibold shadow-lg shadow-indigo-200">
+                <Link href="/dashboard" className="bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-colors font-semibold shadow-lg shadow-indigo-200 mr-4">
                     Ir al Panel
                 </Link>
+                <UserButton afterSignOutUrl="/"/>
              </SignedIn>
           </div>
         </div>
