@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Document, Page, Text, View, StyleSheet, Image, Font } from "@react-pdf/renderer";
 import { formatCurrency, formatDate } from "@/lib/utils";

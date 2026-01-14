@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { renderToStream } from "@react-pdf/renderer";
 import QuotePDF from "@/components/pdf/QuotePDFTemplate";
-import { createElement } from "react";
+
 
 export async function GET(
     request: NextRequest,
@@ -51,8 +51,26 @@ export async function GET(
             });
         }
 
+        // Fix logo URL for server-side rendering
+        if (settings?.logoUrl && settings.logoUrl.startsWith("/")) {
+            const fs = await import("fs");
+            const path = await import("path");
+            const logoPath = path.join(process.cwd(), "public", settings.logoUrl);
+            
+            // Verify file exists before passing it
+            try {
+                await fs.promises.access(logoPath);
+                // @react-pdf/renderer works best with absolute system paths for local files
+                settings.logoUrl = logoPath;
+                console.log("Resolved logo path:", settings.logoUrl);
+            } catch (e) {
+                console.error("Logo file not found at:", logoPath);
+                // Fallback or leave as is if we can't resolve it (might be external)
+            }
+        }
+
         // Generate PDF stream
-        const stream = await renderToStream(createElement(QuotePDF, { quote, settings }) as any);
+        const stream = await renderToStream(<QuotePDF quote={quote} settings={settings} />);
 
         // Return PDF as response
         return new NextResponse(stream as unknown as ReadableStream, {
@@ -64,7 +82,7 @@ export async function GET(
     } catch (error) {
         console.error("Error generating PDF:", error);
         return NextResponse.json(
-            { error: "Failed to generate PDF" },
+            { error: `Failed to generate PDF: ${error instanceof Error ? error.message : String(error)}` },
             { status: 500 }
         );
     }

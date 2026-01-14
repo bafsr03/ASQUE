@@ -169,8 +169,12 @@ export default function ProductsPage() {
                             : "bg-red-100 text-red-800"
                         }`}
                       >
-                        {product.stockStatus}
+                        {product.stockStatus === "available" && "Disponible"}
+                        {product.stockStatus === "out_of_stock" && "Agotado"}
+                        {product.stockStatus === "discontinued" && "Descontinuado"}
+                        {!["available", "out_of_stock", "discontinued"].includes(product.stockStatus) && product.stockStatus}
                       </span>
+
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end space-x-2">

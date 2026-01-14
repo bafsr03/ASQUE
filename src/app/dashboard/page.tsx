@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import DashboardLayout from "@/components/DashboardLayout";
 import { UpgradeButton } from "@/components/UpgradeButton"; // Make sure to export this properly
@@ -11,6 +11,21 @@ export default async function DashboardPage() {
   if (!userId) {
     redirect("/sign-in");
   }
+
+  const clerkUser = await currentUser();
+  const email = clerkUser?.emailAddresses[0]?.emailAddress ?? "";
+
+  // Ensure user exists in database (important for Google OAuth users)
+  await prisma.user.upsert({
+    where: { id: userId },
+    update: {},
+    create: {
+      id: userId,
+      email: email,
+      subscriptionStatus: "FREE",
+      quoteCount: 0,
+    },
+  });
 
   const user = await prisma.user.findUnique({
     where: { id: userId },

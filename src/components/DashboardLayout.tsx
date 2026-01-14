@@ -1,10 +1,11 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
-import { Package, Users, FileText, LayoutDashboard, Settings, Video, Menu, X } from "lucide-react";
+import { Package, Users, FileText, LayoutDashboard, Settings, Video, Menu, X, Zap } from "lucide-react";
 import { UserButton, SignedIn, SignedOut, SignInButton, useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import { UpgradeButton } from "./UpgradeButton";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -14,6 +15,26 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { user } = useUser();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPro, setIsPro] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkSubscription();
+  }, []);
+
+  const checkSubscription = async () => {
+    try {
+        const response = await fetch("/api/subscription/status", { cache: 'no-store' });
+        if (response.ok) {
+            const data = await response.json();
+            setIsPro(data.isPro);
+        }
+    } catch (error) {
+        console.error("Error checking subscription:", error);
+    } finally {
+        setLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-[#F3F5F7]">
@@ -115,35 +136,37 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </nav>
 
         {/* Promo / Upgrade Card */}
-        <div className="p-6">
-           <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 relative overflow-hidden">
-             {/* Abstract blob for visual interest */}
-             <div className="absolute top-0 right-0 w-16 h-16 bg-white rounded-full blur-2xl -mr-8 -mt-8 opacity-60"></div>
-             
-             <h4 className="font-bold text-indigo-900 mb-1 relative z-10">Obtén 40% de descuento</h4>
-             <p className="text-xs text-indigo-600/80 mb-4 relative z-10 leading-relaxed font-medium">
-                ¡Mejora tu prueba gratuita hoy!
-             </p>
-             <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 rounded-xl transition-colors relative z-10 shadow-md shadow-indigo-200">
-                Mejorar Plan
-             </button>
-           </div>
-        </div>
+        {!loading && !isPro && (
+            <div className="p-6">
+               <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-100 relative overflow-hidden">
+                 {/* Abstract blob for visual interest */}
+                 <div className="absolute top-0 right-0 w-16 h-16 bg-white rounded-full blur-2xl -mr-8 -mt-8 opacity-60"></div>
+                 
+                 <h4 className="font-bold text-indigo-900 mb-1 relative z-10">Obtén 40% de descuento</h4>
+                 <p className="text-xs text-indigo-600/80 mb-4 relative z-10 leading-relaxed font-medium">
+                    ¡Mejora tu prueba gratuita hoy!
+                 </p>
+                 <UpgradeButton />
+               </div>
+            </div>
+        )}
 
         {/* User Profile (Bottom) */}
         <div className="p-4 border-t border-gray-100 bg-white/50 backdrop-blur-sm">
           <SignedIn>
-            <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-white transition-all cursor-pointer group">
+            <div className="flex items-center gap-3 p-2 rounded-xl">
               <UserButton 
                 appearance={{
                   elements: {
                     userButtonAvatarBox: "w-9 h-9 ring-2 ring-white shadow-sm",
-                    userButtonTrigger: "focus:shadow-none"
+                    userButtonTrigger: "focus:shadow-none",
+                    userButtonPopoverCard: "shadow-xl"
                   }
                 }}
+                afterSignOutUrl="/"
               />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-gray-900 truncate group-hover:text-indigo-600 transition-colors">
+              <div className="flex-1 min-w-0 pointer-events-none">
+                <p className="text-sm font-bold text-gray-900 truncate">
                   {user?.fullName || user?.firstName || "Usuario"}
                 </p>
                 <p className="text-xs text-gray-500 truncate">

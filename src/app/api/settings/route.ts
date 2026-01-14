@@ -1,9 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { logger, generateRequestId } from "@/lib/logger";
+import { handleError } from "@/lib/errorHandler";
+import { checkRateLimit } from "@/lib/ratelimit";
+import { cacheGet, cacheSet, cacheInvalidateTag, CacheKeys, CacheTags } from "@/lib/cache";
+import { UpdateSettingsSchema } from "@/lib/validation";
 
 // GET /api/settings - Get settings (or create default)
 export async function GET() {
+    const requestId = generateRequestId();
     try {
         const { userId } = await auth();
         const user = await currentUser();
@@ -12,18 +18,31 @@ export async function GET() {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // Ensure user exists in DB
-        // This is a safety check to ensure the user record exists before we try to create settings
-        // In a production app, this should be handled by webhooks, but this ensures it works for MVP
+        // Try cache first
+        const cacheKey = CacheKeys.userSettings(userId);
+        const cached = await cacheGet(cacheKey);
+
+        // Fetch user metadata (count) separately or include in cache if stable
+        const userRecord = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { quoteCount: true, subscriptionStatus: true, subscriptionEnds: true }
+        });
+
+        if (cached) {
+            logger.debug("Settings served from cache", { requestId, userId });
+            return NextResponse.json({
+                ...cached,
+                quoteCount: userRecord?.quoteCount || 0,
+                subscriptionStatus: userRecord?.subscriptionStatus || 'FREE',
+                subscriptionEnds: userRecord?.subscriptionEnds
+            });
+        }
+
+        // Ensure user exists
         await prisma.user.upsert({
             where: { id: userId },
-            update: {
-                email: user.emailAddresses[0]?.emailAddress || "unknown@example.com",
-            },
-            create: {
-                id: userId,
-                email: user.emailAddresses[0]?.emailAddress || "unknown@example.com",
-            }
+            update: { email: user.emailAddresses[0]?.emailAddress || "" },
+            create: { id: userId, email: user.emailAddresses[0]?.emailAddress || "" }
         });
 
         let settings = await prisma.settings.findUnique({
@@ -31,35 +50,35 @@ export async function GET() {
         });
 
         if (!settings) {
-            const defaultSettings = {
-                companyName: "My Company",
-                primaryColor: "#2563eb",
-                secondaryColor: "#1e40af",
-                font: "Helvetica",
-                template: "modern",
-            };
-
-            // Try create (upsert logic safer but create is fine if we just checked)
             settings = await prisma.settings.create({
                 data: {
-                    ...defaultSettings,
+                    companyName: "My Company",
+                    primaryColor: "#2563eb",
+                    secondaryColor: "#1e40af",
+                    font: "Helvetica",
+                    template: "modern",
                     userId,
                 },
             });
+            logger.info("Default settings created", { requestId, userId });
         }
 
-        return NextResponse.json(settings);
+        await cacheSet(cacheKey, settings, 600, [CacheTags.USER(userId)]);
+
+        return NextResponse.json({
+            ...settings,
+            quoteCount: userRecord?.quoteCount || 0,
+            subscriptionStatus: userRecord?.subscriptionStatus || 'FREE',
+            subscriptionEnds: userRecord?.subscriptionEnds
+        });
     } catch (error) {
-        console.error("Error fetching settings:", error);
-        return NextResponse.json(
-            { error: "Failed to fetch settings" },
-            { status: 500 }
-        );
+        return handleError(error, requestId, "Fetch Settings");
     }
 }
 
 // PUT /api/settings - Update settings
 export async function PUT(request: NextRequest) {
+    const requestId = generateRequestId();
     try {
         const { userId } = await auth();
         if (!userId) {
@@ -69,21 +88,25 @@ export async function PUT(request: NextRequest) {
         const body = await request.json();
         const { id, ...data } = body;
 
+        // Validate
+        const validation = UpdateSettingsSchema.safeParse(data);
+        if (!validation.success) return handleError(validation.error, requestId, "Settings Validation");
+
         const settings = await prisma.settings.upsert({
             where: { userId },
-            update: data,
+            update: validation.data,
             create: {
-                ...data,
+                ...validation.data as any,
                 userId,
+                companyName: validation.data.companyName || "My Company",
             },
         });
 
+        await cacheInvalidateTag(CacheTags.USER(userId));
+        logger.info("Settings updated", { requestId, userId });
+
         return NextResponse.json(settings);
     } catch (error) {
-        console.error("Error updating settings:", error);
-        return NextResponse.json(
-            { error: "Failed to update settings" },
-            { status: 500 }
-        );
+        return handleError(error, requestId, "Update Settings");
     }
 }

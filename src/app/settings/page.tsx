@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Save, Loader2, Check, Upload, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { SubscriptionPlan } from "@/components/SubscriptionPlan";
 
 interface Settings {
   id: string;
@@ -46,6 +47,12 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const [subscriptionData, setSubscriptionData] = useState({
+      subscriptionStatus: 'FREE',
+      quoteCount: 0,
+      subscriptionEnds: null as string | null
+  });
 
   useEffect(() => {
     fetchSettings();
@@ -56,7 +63,24 @@ export default function SettingsPage() {
       const response = await fetch("/api/settings");
       if (response.ok) {
         const data = await response.json();
-        setSettings(data);
+        setSettings({
+            id: data.id,
+            companyName: data.companyName,
+            companyAddress: data.companyAddress,
+            companyEmail: data.companyEmail,
+            companyPhone: data.companyPhone,
+            companyTaxId: data.companyTaxId,
+            logoUrl: data.logoUrl,
+            font: data.font,
+            primaryColor: data.primaryColor,
+            secondaryColor: data.secondaryColor,
+            template: data.template
+        });
+        setSubscriptionData({
+            subscriptionStatus: data.subscriptionStatus,
+            quoteCount: data.quoteCount,
+            subscriptionEnds: data.subscriptionEnds
+        });
       }
     } catch (error) {
       console.error("Error fetching settings:", error);
@@ -79,6 +103,7 @@ export default function SettingsPage() {
 
       if (response.ok) {
         // Optional: Show a toast notification
+        alert("Configuración guardada exitosamente");
       } else {
         alert("Error al guardar la configuración");
       }
@@ -139,8 +164,6 @@ export default function SettingsPage() {
 
   if (!settings) return null;
 
-  const currentTemplate = TEMPLATES.find((t) => t.id === settings.template) || TEMPLATES[0];
-
   return (
     <DashboardLayout>
       <div className="max-w-6xl mx-auto">
@@ -165,7 +188,17 @@ export default function SettingsPage() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          {/* Main Column (Templates) */}
+            
+          {/* Main Column (Templates & Subscription) */}
+          <div className="xl:col-span-12 mb-8">
+             <SubscriptionPlan 
+                 subscriptionStatus={subscriptionData.subscriptionStatus}
+                 quoteCount={subscriptionData.quoteCount}
+                 subscriptionEnds={subscriptionData.subscriptionEnds}
+             />
+          </div>
+
+          {/* Templates */}
           <div className="xl:col-span-5 space-y-6">
              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <div className="flex items-center justify-between mb-6">

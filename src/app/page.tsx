@@ -16,7 +16,7 @@ export default function Home() {
             <span className="text-xl font-bold text-gray-900 tracking-tight">ASQUE</span>
           </div>
           <div className="space-x-4">
-            <Link href="/login" className="text-gray-600 hover:text-indigo-600 font-medium transition-colors">Iniciar sesión</Link>
+            <Link href="/sign-in" className="text-gray-600 hover:text-indigo-600 font-medium transition-colors">Iniciar sesión</Link>
              <SignedOut>
                 <SignInButton mode="modal">
                      <button className="bg-indigo-600 text-white px-5 py-2.5 rounded-full hover:bg-indigo-700 transition-colors font-semibold shadow-lg shadow-indigo-200">

@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 import DashboardLayout from "@/components/DashboardLayout";
 import Link from "next/link";
-import { Plus, FileText } from "lucide-react";
+import { Plus, FileText, Edit, Trash2, Lock } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { UpgradeButton } from "@/components/UpgradeButton";
+import { MAX_FREE_QUOTES } from "@/lib/constants";
 
 interface Quote {
   id: string;
@@ -25,11 +26,12 @@ export default function QuotesPage() {
   const { userId, isLoaded } = useAuth();
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isPro, setIsPro] = useState(false);
 
   useEffect(() => {
     if (isLoaded) {
         if (userId) {
-            fetchQuotes();
+            Promise.all([fetchQuotes(), checkSubscription()]);
         } else {
             setLoading(false);
         }
@@ -52,6 +54,34 @@ export default function QuotesPage() {
     }
   };
 
+  const checkSubscription = async () => {
+    try {
+        const response = await fetch("/api/subscription/status");
+        if (response.ok) {
+            const data = await response.json();
+            setIsPro(data.isPro);
+        }
+    } catch (error) {
+        console.error("Error checking subscription:", error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("¿Estás seguro de que deseas eliminar esta cotización?")) return;
+
+    try {
+      const response = await fetch(`/api/quotes/${id}`, { method: "DELETE" });
+      if (response.ok) {
+        fetchQuotes();
+      } else {
+        alert("Error al eliminar la cotización");
+      }
+    } catch (error) {
+      console.error("Error deleting quote:", error);
+      alert("Error al eliminar la cotización");
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "draft":
@@ -67,6 +97,8 @@ export default function QuotesPage() {
     }
   };
 
+  const hasReachedLimit = !isPro && quotes.length >= MAX_FREE_QUOTES;
+
   return (
     <DashboardLayout>
       <div className="space-y-6">
@@ -79,16 +111,44 @@ export default function QuotesPage() {
             </p>
           </div>
           <div className="flex items-center space-x-4">
-            <UpgradeButton />
-            <Link
-              href="/quotes/new"
-              className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Nueva Cotización</span>
-            </Link>
+            {!isPro && <UpgradeButton />}
+            
+            {hasReachedLimit ? (
+                <button
+                    disabled
+                    className="flex items-center space-x-2 bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed"
+                    title="Límite de cotizaciones alcanzado"
+                >
+                    <Lock className="w-5 h-5" />
+                    <span>Límite Alcanzado</span>
+                </button>
+            ) : (
+                <Link
+                href="/quotes/new"
+                className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                >
+                <Plus className="w-5 h-5" />
+                <span>Nueva Cotización</span>
+                </Link>
+            )}
           </div>
         </div>
+
+        {/* Limit Warning */}
+        {hasReachedLimit && (
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                    <div className="bg-amber-100 p-2 rounded-full text-amber-600">
+                        <Lock className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h3 className="text-amber-900 font-medium">Has alcanzado el límite de {MAX_FREE_QUOTES} cotizaciones gratuitas</h3>
+                        <p className="text-amber-700 text-sm">Actualiza a Pro para crear cotizaciones ilimitadas y desbloquear todas las funciones.</p>
+                    </div>
+                </div>
+                <UpgradeButton />
+            </div>
+        )}
 
         {/* Quotes List */}
         {loading ? (
@@ -164,12 +224,29 @@ export default function QuotesPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <Link
-                          href={`/quotes/${quote.id}`}
-                          className="text-indigo-600 hover:text-indigo-900 font-medium"
-                        >
-                          Ver
-                        </Link>
+                        <div className="flex items-center justify-end space-x-2">
+                          <Link
+                            href={`/quotes/${quote.id}`}
+                            className="text-blue-600 hover:text-blue-900"
+                            title="Ver PDF"
+                          >
+                            <FileText className="w-4 h-4" />
+                          </Link>
+                          <Link
+                            href={`/quotes/${quote.id}/edit`}
+                            className="text-indigo-600 hover:text-indigo-900"
+                            title="Editar"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(quote.id)}
+                            className="text-red-600 hover:text-red-900"
+                            title="Eliminar"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
