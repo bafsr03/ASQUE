@@ -40,8 +40,39 @@ export async function POST() {
             where: { id: userId },
         });
 
-        if (!userRecord || !userRecord.stripeCustomerId) {
-            logger.info("No Stripe customer found for user", { requestId, userId });
+        if (!userRecord) {
+            return new NextResponse("User not found", { status: 404 });
+        }
+
+        // Fallback: If no stripeCustomerId, try to find one by email
+        if (!userRecord.stripeCustomerId) {
+            logger.info("No Stripe Customer ID in DB, searching by email...", { requestId, email: user.emailAddresses[0]?.emailAddress });
+
+            const email = user.emailAddresses[0]?.emailAddress;
+            if (email) {
+                const customers = await stripe.customers.list({
+                    email: email,
+                    limit: 1,
+                });
+
+                if (customers.data.length > 0) {
+                    // Found customer! Update DB
+                    const customerId = customers.data[0].id;
+                    logger.info("Found matching Stripe Customer by email", { requestId, customerId });
+
+                    await prisma.user.update({
+                        where: { id: userId },
+                        data: { stripeCustomerId: customerId }
+                    });
+
+                    // Update local variable to proceed with sync
+                    userRecord.stripeCustomerId = customerId;
+                }
+            }
+        }
+
+        if (!userRecord.stripeCustomerId) {
+            logger.info("No Stripe customer found for user after email search", { requestId, userId });
             return NextResponse.json({
                 error: "No stripe customer found",
                 subscriptionStatus: "FREE"
@@ -73,7 +104,7 @@ export async function POST() {
         if (subscriptions && subscriptions.data.length > 0) {
             const sub = subscriptions.data[0];
             subscriptionStatus = "PRO";
-            subscriptionEnds = new Date(sub.current_period_end * 1000);
+            subscriptionEnds = new Date((sub as any).current_period_end * 1000);
 
             logger.info("Active subscription found", {
                 requestId,

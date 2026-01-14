@@ -16,14 +16,20 @@ export async function POST() {
             where: { id: userId },
         });
 
-        if (!userRecord || !userRecord.stripeCustomerId) {
-            return new NextResponse("User not found or no subscription", { status: 404 });
+        if (!userRecord) {
+            console.error("Portal Error: User record not found in DB", { userId });
+            return new NextResponse("User not found", { status: 404 });
+        }
+
+        if (!userRecord.stripeCustomerId) {
+            console.error("Portal Error: No Stripe Customer ID", { userId, email: userRecord.email });
+            return new NextResponse("No subscription found", { status: 404 });
         }
 
         // Create Stripe Portal Session
         const session = await stripe.billingPortal.sessions.create({
             customer: userRecord.stripeCustomerId,
-            return_url: `${process.env.NEXT_PUBLIC_APP_URL}/settings`,
+            return_url: `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/dashboard?portal_return=true`,
         });
 
         return NextResponse.json({ url: session.url });
