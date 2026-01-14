@@ -49,20 +49,20 @@ export default function Home() {
             El sistema universal de gestión de cotizaciones diseñado para empresas modernas.
           </p>
           
-           <div className="flex justify-center space-x-4">
+           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <SignedOut>
               <SignInButton mode="modal">
-                <button className="bg-indigo-600 text-white px-8 py-4 rounded-full hover:bg-indigo-700 transition-all hover:scale-105 font-bold shadow-xl shadow-indigo-200 text-lg flex items-center">
+                <button className="w-full sm:w-auto bg-indigo-600 text-white px-8 py-4 rounded-full hover:bg-indigo-700 transition-all hover:scale-105 font-bold shadow-xl shadow-indigo-200 text-lg flex items-center justify-center">
                   Prueba Gratis <span className="ml-2">→</span>
                 </button>
               </SignInButton>
             </SignedOut>
              <SignedIn>
-                <Link href="/dashboard" className="bg-indigo-600 text-white px-8 py-4 rounded-full hover:bg-indigo-700 transition-all hover:scale-105 font-bold shadow-xl shadow-indigo-200 text-lg flex items-center">
+                <Link href="/dashboard" className="w-full sm:w-auto bg-indigo-600 text-white px-8 py-4 rounded-full hover:bg-indigo-700 transition-all hover:scale-105 font-bold shadow-xl shadow-indigo-200 text-lg flex items-center justify-center">
                     Entrar al Espacio <span className="ml-2">→</span>
                 </Link>
              </SignedIn>
-             <button className="bg-white text-gray-700 px-8 py-4 rounded-full hover:bg-gray-50 border border-gray-200 transition-all font-bold text-lg hover:border-gray-300">
+             <button className="w-full sm:w-auto bg-white text-gray-700 px-8 py-4 rounded-full hover:bg-gray-50 border border-gray-200 transition-all font-bold text-lg hover:border-gray-300">
                 Ver Demo
              </button>
           </div>

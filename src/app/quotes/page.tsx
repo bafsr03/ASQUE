@@ -103,7 +103,7 @@ export default function QuotesPage() {
     <DashboardLayout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Cotizaciones</h1>
             <p className="text-gray-600 mt-1">
@@ -173,87 +173,139 @@ export default function QuotesPage() {
             </Link>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Cotización #
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Cliente
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Fecha
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Total
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Estado
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {quotes.map((quote) => {
-                  const subtotal = quote.items.reduce((sum, item) => sum + item.subtotal, 0);
-                  return (
-                    <tr key={quote.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {quote.quoteNumber}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {quote.client.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {formatDate(quote.date)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatCurrency(subtotal)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
-                            quote.status
-                          )}`}
-                        >
-                          {quote.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div className="flex items-center justify-end space-x-2">
-                          <Link
-                            href={`/quotes/${quote.id}`}
-                            className="text-blue-600 hover:text-blue-900"
-                            title="Ver PDF"
-                          >
-                            <FileText className="w-4 h-4" />
-                          </Link>
-                          <Link
-                            href={`/quotes/${quote.id}/edit`}
-                            className="text-indigo-600 hover:text-indigo-900"
-                            title="Editar"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(quote.id)}
-                            className="text-red-600 hover:text-red-900"
-                            title="Eliminar"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
+          <>
+            {/* Desktop Table */}
+            <div className="hidden md:block bg-white rounded-lg shadow-md overflow-hidden">
+                <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                    <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Cotización #
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Cliente
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Fecha
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Total
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Estado
+                    </th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Acciones
+                    </th>
                     </tr>
-                  );
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                    {quotes.map((quote) => {
+                    const subtotal = quote.items.reduce((sum, item) => sum + item.subtotal, 0);
+                    return (
+                        <tr key={quote.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            {quote.quoteNumber}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {quote.client.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {formatDate(quote.date)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {formatCurrency(subtotal)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                            <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+                                quote.status
+                            )}`}
+                            >
+                            {quote.status}
+                            </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div className="flex items-center justify-end space-x-2">
+                            <Link
+                                href={`/quotes/${quote.id}`}
+                                className="text-blue-600 hover:text-blue-900"
+                                title="Ver PDF"
+                            >
+                                <FileText className="w-4 h-4" />
+                            </Link>
+                            <Link
+                                href={`/quotes/${quote.id}/edit`}
+                                className="text-indigo-600 hover:text-indigo-900"
+                                title="Editar"
+                            >
+                                <Edit className="w-4 h-4" />
+                            </Link>
+                            <button
+                                onClick={() => handleDelete(quote.id)}
+                                className="text-red-600 hover:text-red-900"
+                                title="Eliminar"
+                            >
+                                <Trash2 className="w-4 h-4" />
+                            </button>
+                            </div>
+                        </td>
+                        </tr>
+                    );
+                    })}
+                </tbody>
+                </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4">
+                {quotes.map((quote) => {
+                    const subtotal = quote.items.reduce((sum, item) => sum + item.subtotal, 0);
+                    return (
+                        <div key={quote.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 className="font-bold text-gray-900 text-lg">{quote.quoteNumber}</h3>
+                                    <p className="text-sm text-gray-500">{quote.client.name}</p>
+                                </div>
+                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(quote.status)}`}>
+                                    {quote.status}
+                                </span>
+                            </div>
+                            
+                            <div className="flex justify-between items-center text-sm text-gray-600 mb-4 border-t border-b border-gray-50 py-3">
+                                <span>{formatDate(quote.date)}</span>
+                                <span className="font-bold text-gray-900 text-lg">{formatCurrency(subtotal)}</span>
+                            </div>
+
+                            <div className="flex justify-end space-x-4">
+                                <Link
+                                    href={`/quotes/${quote.id}`}
+                                    className="flex items-center text-sm text-blue-600 font-medium"
+                                >
+                                    <FileText className="w-4 h-4 mr-1" />
+                                    PDF
+                                </Link>
+                                <Link
+                                    href={`/quotes/${quote.id}/edit`}
+                                    className="flex items-center text-sm text-indigo-600 font-medium"
+                                >
+                                    <Edit className="w-4 h-4 mr-1" />
+                                    Editar
+                                </Link>
+                                <button
+                                    onClick={() => handleDelete(quote.id)}
+                                    className="flex items-center text-sm text-red-600 font-medium"
+                                >
+                                    <Trash2 className="w-4 h-4 mr-1" />
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    );
                 })}
-              </tbody>
-            </table>
-          </div>
+            </div>
+          </>
         )}
       </div>
     </DashboardLayout>
